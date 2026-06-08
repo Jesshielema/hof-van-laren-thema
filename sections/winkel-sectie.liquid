@@ -4,7 +4,6 @@
 
     <div class="winkel__info">
       <h2 class="winkel__heading">{{ section.settings.heading | default: 'Kom langs in Zuidlaren' | escape }}</h2>
-      <div class="winkel__rule" aria-hidden="true"></div>
 
       {% if section.settings.description != blank %}
         <p class="winkel__desc">{{ section.settings.description }}</p>
@@ -36,11 +35,6 @@
           rel="noopener"
           class="winkel__cta winkel__cta--primary"
         >Route plannen →</a>
-        {% if section.settings.show_appointment %}
-          <a href="{{ section.settings.appointment_url | default: '#contact' }}" class="winkel__cta winkel__cta--outline">
-            Adviesgesprek boeken
-          </a>
-        {% endif %}
       </div>
     </div>
 
@@ -117,20 +111,13 @@
   }
 
   .winkel__heading {
-    font-family: var(--font-heading);
+    font-family: 'skeena', 'Cormorant Garamond', Georgia, serif;
     font-size: clamp(1.8rem, 3vw, 2.8rem);
     font-weight: 400;
     font-style: italic;
     color: var(--color-foreground);
     margin: 0 0 1.25rem;
     line-height: 1.15;
-  }
-
-  .winkel__rule {
-    width: 40px;
-    height: 1px;
-    background-color: var(--color-gold);
-    margin-bottom: 1.5rem;
   }
 
   .winkel__desc {
