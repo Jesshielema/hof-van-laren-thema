@@ -59,17 +59,67 @@
       >{{ link.title | escape }}</a>
     {% endfor %}
   </nav>
-
-  <nav class="mobile-nav" id="mobile-nav" hidden>
-    {% for link in section.settings.menu.links %}
-      <a
-        href="{{ link.url }}"
-        class="mobile-nav__link{% if link.active %} mobile-nav__link--active{% endif %}"
-        {% if link.active %}aria-current="page"{% endif %}
-      >{{ link.title | escape }}</a>
-    {% endfor %}
-  </nav>
 </header>
+
+<div class="drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+
+<aside class="drawer" id="mobile-nav" aria-hidden="true" aria-label="Winkelinformatie">
+  <div class="drawer__inner">
+
+    <button class="drawer__close" data-toggle="mobile-nav" aria-label="Menu sluiten">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="drawer__brand">
+      <a href="{{ routes.root_url }}" class="drawer__brand-link" data-toggle="mobile-nav">
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | image_url: width: 160 }}" alt="{{ shop.name }}" width="160" height="80" loading="lazy" class="drawer__brand-img">
+        {% else %}
+          <span class="drawer__brand-name">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <div class="drawer__section-title">Winkelinformatie</div>
+
+    <nav class="drawer__nav">
+      <a href="{{ section.settings.drawer_url_1 | default: '/pages/over-hof-van-laren' }}" class="drawer__link" data-toggle="mobile-nav" style="--i:0">
+        Over Hof van Laren
+      </a>
+      <a href="{{ section.settings.drawer_url_2 | default: '/pages/over-marchien' }}" class="drawer__link" data-toggle="mobile-nav" style="--i:1">
+        Ontmoet Marchien
+      </a>
+      <a href="{{ section.settings.drawer_url_3 | default: '#winkel' }}" class="drawer__link" data-toggle="mobile-nav" style="--i:2">
+        Bezoek de winkel
+      </a>
+      <a href="{{ section.settings.drawer_url_4 | default: '#winkel' }}" class="drawer__link" data-toggle="mobile-nav" style="--i:3">
+        Openingstijden
+      </a>
+      <a href="{{ section.settings.drawer_url_5 | default: '/pages/contact' }}" class="drawer__link" data-toggle="mobile-nav" style="--i:4">
+        Contact
+      </a>
+      <a href="{{ section.settings.drawer_url_6 | default: 'https://instagram.com' }}" class="drawer__link drawer__link--instagram" target="_blank" rel="noopener" style="--i:5">
+        Instagram
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="drawer__link-icon">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+        </svg>
+      </a>
+    </nav>
+
+    <div class="drawer__footer">
+      <p class="drawer__footer-address">Stationsweg 2, Zuidlaren</p>
+      <a href="tel:{{ section.settings.phone | default: '0640356687' | remove: '-' | remove: ' ' }}" class="drawer__footer-phone">
+        {{ section.settings.phone | default: '06-40356687' }}
+      </a>
+    </div>
+
+  </div>
+</aside>
 
 {% stylesheet %}
   .site-header {
@@ -204,69 +254,237 @@
     padding-bottom: 1px;
   }
 
-  /* Mobiele navigatie (uitgeklapt via hamburger) */
-  .mobile-nav {
-    background-color: var(--color-background);
-    border-top: 1px solid rgba(28,20,16,0.12);
-    padding: 0 1.5rem 1rem;
+  /* Overlay */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 20, 16, 0.45);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .drawer-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Drawer */
+  .drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: min(340px, 88vw);
+    background: var(--color-background);
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
+    box-shadow: 4px 0 32px rgba(28, 20, 16, 0.18);
   }
 
-  .mobile-nav[hidden] {
-    display: none;
+  .drawer.is-open {
+    transform: translateX(0);
   }
 
-  .mobile-nav__link {
-    display: block;
+  .drawer__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem 2rem 2rem;
+    overflow-y: auto;
+    gap: 0;
+  }
+
+  /* Sluitknop */
+  .drawer__close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-foreground);
+    padding: 4px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    margin-bottom: 1.5rem;
+    line-height: 0;
+  }
+
+  .drawer__close:hover { opacity: 1; }
+
+  /* Merk */
+  .drawer__brand {
+    margin-bottom: 2.5rem;
+  }
+
+  .drawer__brand-link {
+    display: inline-block;
     text-decoration: none;
+  }
+
+  .drawer__brand-img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .drawer__brand-name {
+    font-family: 'skeena', Georgia, serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 700;
     color: var(--color-foreground);
-    font-size: 1rem;
-    font-weight: 300;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid rgba(28,20,16,0.08);
-    transition: color 0.2s;
   }
 
-  .mobile-nav__link:last-child {
-    border-bottom: none;
-  }
-
-  .mobile-nav__link:hover {
+  /* Sectietitel */
+  .drawer__section-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--color-gold);
+    margin-bottom: 1rem;
   }
 
-  .mobile-nav__link--active {
+  /* Nav links */
+  .drawer__nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .drawer__link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-family: 'skeena', Georgia, serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 400;
     color: var(--color-foreground);
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.22s, padding-left 0.22s;
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  .drawer__link:last-child { border-bottom: none; }
+
+  .drawer__link:hover {
+    color: var(--color-gold);
+    padding-left: 4px;
+  }
+
+  .drawer__link--instagram { color: var(--color-muted); }
+  .drawer__link--instagram:hover { color: var(--color-foreground); }
+
+  .drawer__link-icon { flex-shrink: 0; opacity: 0.7; }
+
+  /* Staggered link animatie — alleen actief als drawer open is */
+  .drawer.is-open .drawer__link {
+    animation: drawerLinkIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(0.18s + var(--i) * 0.055s);
+  }
+
+  @keyframes drawerLinkIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Footer */
+  .drawer__footer {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .drawer__footer-address {
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+
+  .drawer__footer-phone {
+    font-size: 0.88rem;
+    color: var(--color-foreground);
+    text-decoration: none;
     font-weight: 500;
   }
 
-  /* Op mobiel: verberg desktop nav, toon alleen mobiele nav via hamburger */
+  .drawer__footer-phone:hover { color: var(--color-gold); }
+
+  /* Hamburger animatie → X */
+  .header__hamburger svg rect {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.2s ease;
+    transform-origin: center;
+  }
+
+  .header__hamburger.is-open svg rect:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+
+  .header__hamburger.is-open svg rect:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .header__hamburger.is-open svg rect:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+
+  /* Desktop nav verbergen op mobiel */
   @media (max-width: 768px) {
-    .header__logo-img {
-      height: 60px;
-    }
-
-    .header__nav {
-      display: none;
-    }
-
-    .header__bar {
-      padding: 0.6rem 1.25rem;
-    }
+    .header__logo-img { height: 60px; }
+    .header__nav { display: none; }
+    .header__bar { padding: 0.6rem 1.25rem; }
   }
 {% endstylesheet %}
 
 {% javascript %}
   (function () {
-    var btn = document.querySelector('[data-toggle="mobile-nav"]');
-    var nav = document.getElementById('mobile-nav');
-    if (!btn || !nav) return;
+    var drawer   = document.getElementById('mobile-nav');
+    var overlay  = document.getElementById('drawer-overlay');
+    var hamburger = document.querySelector('.header__hamburger');
+    if (!drawer || !overlay || !hamburger) return;
 
-    btn.addEventListener('click', function () {
-      var isOpen = !nav.hidden;
-      nav.hidden = isOpen;
-      btn.setAttribute('aria-expanded', String(!isOpen));
+    function openDrawer() {
+      drawer.classList.add('is-open');
+      overlay.classList.add('is-open');
+      hamburger.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', function () {
+      drawer.classList.contains('is-open') ? closeDrawer() : openDrawer();
+    });
+
+    overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    document.querySelectorAll('.drawer__close').forEach(function (btn) {
+      btn.addEventListener('click', closeDrawer);
     });
   })();
 {% endjavascript %}
@@ -283,9 +501,49 @@
     {
       "type": "link_list",
       "id": "menu",
-      "label": "Navigatie",
+      "label": "Navigatie (desktop)",
       "default": "main-menu"
     },
+    {
+      "type": "header",
+      "content": "Zijmenu links"
+    },
+    {
+      "type": "url",
+      "id": "drawer_url_1",
+      "label": "Over Hof van Laren — link"
+    },
+    {
+      "type": "url",
+      "id": "drawer_url_2",
+      "label": "Ontmoet Marchien — link"
+    },
+    {
+      "type": "url",
+      "id": "drawer_url_3",
+      "label": "Bezoek de winkel — link"
+    },
+    {
+      "type": "url",
+      "id": "drawer_url_4",
+      "label": "Openingstijden — link"
+    },
+    {
+      "type": "url",
+      "id": "drawer_url_5",
+      "label": "Contact — link"
+    },
+    {
+      "type": "url",
+      "id": "drawer_url_6",
+      "label": "Instagram — link"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Telefoonnummer",
+      "default": "06-40356687"
+    }
   ]
 }
 {% endschema %}
