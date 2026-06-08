@@ -81,11 +81,10 @@
     line-height: 1.6;
   }
 
-  /* Mosaic grid */
+  /* Uniform grid */
   .klanten__mosaic {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
   }
 
@@ -93,23 +92,7 @@
     overflow: hidden;
     border-radius: var(--radius-sm);
     background: var(--color-bg-2);
-  }
-
-  /* Standaard: vierkant */
-  .klanten__foto { aspect-ratio: 1; }
-
-  /* Foto 1 — groot, links bovenaan (2 rijen hoog) */
-  .klanten__foto--1 {
-    grid-column: 1;
-    grid-row: 1 / 3;
-    aspect-ratio: auto;
-  }
-
-  /* Foto 7 — groot, rechts onderaan (2 rijen hoog) */
-  .klanten__foto--7 {
-    grid-column: 3;
-    grid-row: 3 / 5;
-    aspect-ratio: auto;
+    aspect-ratio: 1;
   }
 
   .klanten__img {
@@ -149,17 +132,6 @@
   @media (max-width: 768px) {
     .klanten__mosaic {
       grid-template-columns: repeat(2, 1fr);
-    }
-
-    .klanten__foto--1 {
-      grid-column: 1;
-      grid-row: 1 / 3;
-    }
-
-    .klanten__foto--7 {
-      grid-column: 2;
-      grid-row: auto;
-      aspect-ratio: 1;
     }
 
     .klanten {
