@@ -78,12 +78,24 @@
             <span>Zaterdag: 09:00 – 17:00</span>
           {% endif %}
         </div>
-        <a
-          href="https://maps.google.com/?q=Stationsweg+2+Zuidlaren"
-          target="_blank"
-          rel="noopener"
-          class="footer__map-link"
-        >Route plannen →</a>
+        <div class="footer__socials">
+          {% if section.settings.instagram_url != blank %}
+            <a href="{{ section.settings.instagram_url }}" class="footer__social-icon" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.6"/>
+                <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.6"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+              </svg>
+            </a>
+          {% endif %}
+          {% if section.settings.facebook_url != blank %}
+            <a href="{{ section.settings.facebook_url }}" class="footer__social-icon" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
       </div>
 
     </div>
@@ -179,11 +191,13 @@
 
   /* Kolommen */
   .footer__heading {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-gold);
+    font-family: 'skeena', 'Cormorant Garamond', Georgia, serif;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-background);
     margin: 0 0 1.25rem;
   }
 
@@ -246,18 +260,24 @@
     margin-bottom: 1.25rem;
   }
 
-  .footer__map-link {
-    display: inline-block;
-    color: var(--color-gold);
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    transition: opacity 0.2s;
+  .footer__socials {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.25rem;
   }
 
-  .footer__map-link:hover {
-    opacity: 0.75;
+  .footer__social-icon {
+    color: rgba(245,238,228,0.5);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+    line-height: 0;
+  }
+
+  .footer__social-icon:hover {
+    color: var(--color-gold);
   }
 
   /* Onderste balk */
@@ -379,6 +399,11 @@
       "id": "instagram_handle",
       "label": "Instagram handle",
       "default": "@hofvanlaren"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
     },
     {
       "type": "header",
