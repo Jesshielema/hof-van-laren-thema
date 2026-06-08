@@ -1,0 +1,313 @@
+{%- render 'section-typo' -%}
+<section class="stappen full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="stappen__inner">
+
+    <div class="stappen__header">
+      {% if section.settings.label != blank %}
+        <span class="stappen__label">{{ section.settings.label | escape }}</span>
+      {% endif %}
+      <h2 class="stappen__title">{{ section.settings.title | default: 'Hoe werkt het?' }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="stappen__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <ol class="stappen__lijst">
+      {% for i in (1..4) %}
+        {% liquid
+          assign title_key = 'stap_' | append: i | append: '_title'
+          assign body_key  = 'stap_' | append: i | append: '_body'
+          assign title_val = section.settings[title_key]
+          assign body_val  = section.settings[body_key]
+        %}
+        {% if title_val != blank %}
+          <li class="stap">
+            <div class="stap__nummer" aria-hidden="true">{{ i }}</div>
+            <h3 class="stap__title">{{ title_val | escape }}</h3>
+            {% if body_val != blank %}
+              <p class="stap__body">{{ body_val | escape }}</p>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+
+    {% if section.settings.cta_url != blank %}
+      <div class="stappen__cta-wrap">
+        <a href="{{ section.settings.cta_url }}" class="stappen__cta">
+          {{ section.settings.cta_text | default: 'Bestel jouw boeket' | escape }} →
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .stappen {
+    background-color: var(--color-bg-2);
+    padding: 5rem 0;
+  }
+
+  .stappen__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .stappen__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .stappen__label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .stappen__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-foreground);
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .stappen__subtitle {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Stappen grid */
+  .stappen__lijst {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .stap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    position: relative;
+    padding-top: 0.5rem;
+  }
+
+  /* Verbindingslijn tussen stappen */
+  .stap:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 1.75rem;
+    left: calc(100% + 0.5rem);
+    width: calc(2rem - 1rem);
+    height: 1px;
+    background: var(--color-border);
+    display: none;
+  }
+
+  .stap__nummer {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    color: var(--color-background);
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--font-heading);
+    font-style: italic;
+  }
+
+  .stap__title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-foreground);
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .stap__body {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .stappen__cta-wrap {
+    text-align: center;
+  }
+
+  .stappen__cta {
+    display: inline-block;
+    background-color: var(--color-gold);
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.85rem 1.75rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  .stappen__cta:hover {
+    background-color: var(--color-gold-light);
+  }
+
+  @media (max-width: 900px) {
+    .stappen__lijst {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stappen__lijst {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .stappen {
+      padding: 3.5rem 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Stappen – Hoe werkt het?",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Klein label",
+      "default": "Het proces"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Hoe werkt het?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Ondertitel (optioneel)"
+    },
+    {
+      "type": "header",
+      "content": "Stap 1"
+    },
+    {
+      "type": "text",
+      "id": "stap_1_title",
+      "label": "Titel",
+      "default": "Kies een gelegenheid"
+    },
+    {
+      "type": "text",
+      "id": "stap_1_body",
+      "label": "Toelichting",
+      "default": "Verjaardag, liefde, trouwen, rouw — vertel ons voor wie het boeket is."
+    },
+    {
+      "type": "header",
+      "content": "Stap 2"
+    },
+    {
+      "type": "text",
+      "id": "stap_2_title",
+      "label": "Titel",
+      "default": "Kies formaat en stijl"
+    },
+    {
+      "type": "text",
+      "id": "stap_2_body",
+      "label": "Toelichting",
+      "default": "Klein, middel of groot — en of je voorkeur uitgaat naar wilde, klassieke of minimalistische stijl."
+    },
+    {
+      "type": "header",
+      "content": "Stap 3"
+    },
+    {
+      "type": "text",
+      "id": "stap_3_title",
+      "label": "Titel",
+      "default": "Geef aan wat je niet wilt"
+    },
+    {
+      "type": "text",
+      "id": "stap_3_body",
+      "label": "Toelichting",
+      "default": "Allergieën, bloemen die je niet mooi vindt — we houden er rekening mee."
+    },
+    {
+      "type": "header",
+      "content": "Stap 4"
+    },
+    {
+      "type": "text",
+      "id": "stap_4_title",
+      "label": "Titel",
+      "default": "Marchien stelt jouw boeket samen"
+    },
+    {
+      "type": "text",
+      "id": "stap_4_body",
+      "label": "Toelichting",
+      "default": "Met de mooiste bloemen van dat moment maakt Marchien een uniek boeket speciaal voor jou."
+    },
+    {
+      "type": "header",
+      "content": "Knop (optioneel)"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knoptekst",
+      "default": "Bestel jouw boeket"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knoplink"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [{ "name": "Stappen – Hoe werkt het?" }]
+}
+{% endschema %}

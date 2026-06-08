@@ -1,0 +1,155 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "homepage-hero",
+      "settings": {
+        "background_image": "shopify://shop_images/hero-background.png",
+        "hero_image": "shopify://shop_images/hero-image_7f181b17-cefe-402a-ad4a-fc9abe190594.png",
+        "heading": "Van een klein ideetot een persoonlijk boeket",
+        "heading_highlight": "vol gevoel",
+        "cta_text": "Online bloemen bestellen",
+        "cta_url": "/collections/all",
+        "cta_2_text": "Bezoek de winkel",
+        "cta_2_url": "#winkel",
+        "heading_font": "inherit",
+        "heading_weight": "inherit",
+        "heading_style": "inherit",
+        "heading_color": "",
+        "body_font": "inherit",
+        "body_weight": "inherit",
+        "body_color": ""
+      }
+    },
+    "marchien": {
+      "type": "marchien-quote",
+      "settings": {
+        "quote": "<p>\"Ik vind het allermooiste aan boeketten maken het stukje <strong>personaliseren</strong> — goed luisteren naar wat de vraag is en dat verwerken tot een <strong>prachtig eindresultaat</strong>.\"</p>",
+        "attribution": "— Marchien, eigenaar Hof van Laren",
+        "link_text": "Leer Marchien kennen",
+        "link_url": "/pages/over-marchien",
+        "image": "shopify://shop_images/Marchien.png",
+        "background_image": "shopify://shop_images/hero-background.png",
+        "heading_font": "inherit",
+        "heading_weight": "inherit",
+        "heading_style": "inherit",
+        "heading_color": "rgba(0,0,0,0)",
+        "body_font": "inherit",
+        "body_weight": "inherit",
+        "body_color": ""
+      }
+    },
+    "gelegenheden": {
+      "type": "gelegenheden",
+      "settings": {
+        "occasion_1_text": "Verjaardag",
+        "occasion_1_url": "",
+        "occasion_2_text": "Liefde",
+        "occasion_2_url": "",
+        "occasion_3_text": "Trouwdag",
+        "occasion_3_url": "",
+        "occasion_4_text": "Felicitatie",
+        "occasion_4_url": "",
+        "occasion_5_text": "Rouw",
+        "occasion_5_url": "",
+        "occasion_6_text": "Zijdebloemen",
+        "occasion_6_url": "",
+        "collection_image_1": "shopify://shop_images/Rectangle_444.png",
+        "collection_url_1": "",
+        "collection_image_2": "shopify://shop_images/despots.png",
+        "collection_url_2": "",
+        "collection_image_3": "shopify://shop_images/Rectangle_443.png",
+        "collection_url_3": "",
+        "heading_font": "inherit",
+        "heading_weight": "inherit",
+        "heading_style": "inherit",
+        "heading_color": "",
+        "body_font": "inherit",
+        "body_weight": "inherit",
+        "body_color": ""
+      }
+    },
+    "despots": {
+      "type": "despots-featured",
+      "settings": {
+        "image": "shopify://shop_images/despots.png",
+        "label": "Uitgelicht merk",
+        "heading": "Des Pots",
+        "description": "<p>Deze potten zijn geen vazen. Dit zijn <strong>karakters</strong>. Des Pots maakt stukken die een kamer direct veranderen — vol kleur, vol leven, vol persoonlijkheid.</p>",
+        "cta_text": "Bekijk Des Pots collectie",
+        "cta_url": "/collections/des-pots",
+        "heading_font": "inherit",
+        "heading_weight": "inherit",
+        "heading_style": "inherit",
+        "heading_color": "",
+        "body_font": "inherit",
+        "body_weight": "inherit",
+        "body_color": ""
+      }
+    },
+    "instagram": {
+      "type": "instagram-cta",
+      "settings": {
+        "heading": "Dagelijks verse inspiratie op",
+        "instagram_handle": "@hofvanlaren",
+        "subtitle": "<p>Volg Marchien voor nieuwe collecties, stylingtips en inkoopreizen naar <strong>Denemarken</strong>.</p>",
+        "instagram_url": "",
+        "cta_text": "Volg ons op Instagram",
+        "foto_1": "shopify://shop_images/Rectangle_444.png",
+        "url_1": "",
+        "foto_2": "shopify://shop_images/Rectangle_442.png",
+        "url_2": "",
+        "foto_3": "shopify://shop_images/Rectangle_443.png",
+        "url_3": "",
+        "foto_4": "shopify://shop_images/despots.png",
+        "url_4": "",
+        "foto_5": "shopify://shop_images/Rectangle_444.png",
+        "url_5": "",
+        "foto_6": "shopify://shop_images/despots.png",
+        "url_6": "",
+        "heading_font": "inherit",
+        "heading_weight": "inherit",
+        "heading_style": "inherit",
+        "heading_color": "",
+        "body_font": "inherit",
+        "body_weight": "inherit",
+        "body_color": ""
+      }
+    },
+    "winkel": {
+      "type": "winkel-sectie",
+      "settings": {
+        "label": "Bezoek de winkel",
+        "heading": "Kom langs in Zuidlaren",
+        "description": "Wil je de collectie live zien, advies van Marchien of een pot in het echt aanraken? Kom gerust langs in de winkel aan de Stationsweg in Zuidlaren. We staan voor je klaar.",
+        "phone": "06-40356687",
+        "hours": "Wo – vr: 09:00 – 18:00\nZaterdag: 09:00 – 17:00",
+        "show_appointment": true,
+        "appointment_url": "",
+        "heading_font": "inherit",
+        "heading_weight": "inherit",
+        "heading_style": "inherit",
+        "heading_color": "",
+        "body_font": "inherit",
+        "body_weight": "inherit",
+        "body_color": ""
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marchien",
+    "gelegenheden",
+    "despots",
+    "instagram",
+    "winkel"
+  ]
+}

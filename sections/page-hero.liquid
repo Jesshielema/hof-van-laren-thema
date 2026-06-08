@@ -1,0 +1,167 @@
+{%- render 'section-typo' -%}
+<section class="page-hero full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  {% if section.settings.background_image != blank %}
+    <div class="page-hero__bg" aria-hidden="true">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 1440 }}"
+        alt=""
+        width="1440"
+        loading="eager"
+        class="page-hero__bg-img"
+      >
+    </div>
+  {% endif %}
+
+  <div class="page-hero__inner">
+    {% if section.settings.label != blank %}
+      <span class="page-hero__label">{{ section.settings.label | escape }}</span>
+    {% endif %}
+    <h1 class="page-hero__title">{{ section.settings.title | default: page.title }}</h1>
+    {% if section.settings.subtitle != blank %}
+      <p class="page-hero__subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+    {% if section.settings.cta_url != blank %}
+      <a href="{{ section.settings.cta_url }}" class="page-hero__cta">
+        {{ section.settings.cta_text | default: 'Bestel jouw boeket' | escape }} →
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .page-hero {
+    background-color: var(--color-background);
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 0 4rem;
+    text-align: center;
+  }
+
+  .page-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.18;
+  }
+
+  .page-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .page-hero__label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .page-hero__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 700;
+    font-style: normal;
+    color: var(--color-foreground);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .page-hero__subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .page-hero__cta {
+    display: inline-block;
+    background-color: var(--color-gold);
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.85rem 1.75rem;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s;
+  }
+
+  .page-hero__cta:hover {
+    background-color: var(--color-gold-light);
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 3.5rem 0 3rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pagina hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Klein label",
+      "default": "Hof van Laren"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Boeketten bestellen"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Ondertitel",
+      "default": "Persoonlijk samengesteld door Marchien. Geen standaard boeketten — elk boeket uniek, gemaakt voor jouw moment."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Achtergrondafbeelding (subtiel)"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knoptekst",
+      "default": "Bestel jouw boeket"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knoplink"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [{ "name": "Pagina hero" }]
+}
+{% endschema %}

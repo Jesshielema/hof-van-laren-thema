@@ -1,0 +1,322 @@
+{%- render 'section-typo' -%}
+<section class="coll-hero full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  {% if section.settings.background_image != blank %}
+    <div class="coll-hero__bg" aria-hidden="true">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 1440 }}"
+        alt=""
+        width="1440"
+        loading="eager"
+        class="coll-hero__bg-img"
+      >
+    </div>
+  {% endif %}
+
+  <div class="coll-hero__inner">
+    <h1 class="coll-hero__title">{{ section.settings.title | default: 'Collectie' }}</h1>
+
+    {% if section.settings.subtitle != blank %}
+      <p class="coll-hero__subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+
+    {% assign has_nav = false %}
+    {% for i in (1..3) %}
+      {% assign label_key = 'group_' | append: i | append: '_label' %}
+      {% if section.settings[label_key] != blank %}
+        {% assign has_nav = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if has_nav %}
+      <nav class="coll-subnav" aria-label="Collectie categorieën">
+        {% for i in (1..3) %}
+          {% liquid
+            assign label_key = 'group_' | append: i | append: '_label'
+            assign menu_key  = 'group_' | append: i | append: '_menu'
+            assign label_val = section.settings[label_key]
+            assign menu_val  = section.settings[menu_key]
+          %}
+          {% if label_val != blank %}
+            <div class="coll-subnav__group">
+              <button class="coll-subnav__btn" aria-expanded="false" aria-haspopup="true">
+                {{ label_val | escape }}
+                <svg class="coll-subnav__chevron" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              {% if menu_val != blank %}
+                <ul class="coll-subnav__dropdown" hidden>
+                  {% for link in menu_val.links %}
+                    <li><a href="{{ link.url }}" class="coll-subnav__item">{{ link.title | escape }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </nav>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .coll-hero {
+    background-color: var(--color-background);
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 0 3rem;
+  }
+
+  .coll-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .coll-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.2;
+  }
+
+  .coll-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .coll-hero__title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    font-family: var(--font-heading);
+    font-style: normal;
+    color: var(--color-foreground);
+    margin: 0;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .coll-hero__subtitle {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    font-weight: 300;
+    margin: 0;
+  }
+
+  /* Sub-navigatie */
+  .coll-subnav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .coll-subnav__group {
+    position: relative;
+  }
+
+  .coll-subnav__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.75;
+    padding: 0.35rem 0.6rem;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+    font-family: var(--font-body);
+  }
+
+  .coll-subnav__btn:hover,
+  .coll-subnav__btn[aria-expanded="true"] {
+    opacity: 1;
+  }
+
+  .coll-subnav__chevron {
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .coll-subnav__btn[aria-expanded="true"] .coll-subnav__chevron {
+    transform: rotate(180deg);
+  }
+
+  .coll-subnav__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem 0;
+    min-width: 160px;
+    box-shadow: var(--shadow-sm);
+    z-index: 50;
+  }
+
+  .coll-subnav__dropdown[hidden] {
+    display: none;
+  }
+
+  .coll-subnav__item {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s;
+  }
+
+  .coll-subnav__item:hover {
+    background-color: var(--color-bg-2);
+  }
+
+  @media (max-width: 768px) {
+    .coll-hero {
+      padding: 2.5rem 0 2rem;
+    }
+
+    .coll-hero__title {
+      font-size: clamp(2rem, 10vw, 3rem);
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var groups = document.querySelectorAll('.coll-subnav__group');
+    groups.forEach(function (group) {
+      var btn = group.querySelector('.coll-subnav__btn');
+      var dropdown = group.querySelector('.coll-subnav__dropdown');
+      if (!btn) return;
+
+      btn.addEventListener('click', function () {
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+        // sluit alle andere dropdowns
+        groups.forEach(function (g) {
+          var b = g.querySelector('.coll-subnav__btn');
+          var d = g.querySelector('.coll-subnav__dropdown');
+          if (b) b.setAttribute('aria-expanded', 'false');
+          if (d) d.hidden = true;
+        });
+        if (!isOpen) {
+          btn.setAttribute('aria-expanded', 'true');
+          if (dropdown) dropdown.hidden = false;
+        }
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.coll-subnav__group')) {
+        groups.forEach(function (g) {
+          var b = g.querySelector('.coll-subnav__btn');
+          var d = g.querySelector('.coll-subnav__dropdown');
+          if (b) b.setAttribute('aria-expanded', 'false');
+          if (d) d.hidden = true;
+        });
+      }
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Collectie hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Paginatitel",
+      "default": "Collectie"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Ondertitel (optioneel)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Achtergrondafbeelding"
+    },
+    {
+      "type": "header",
+      "content": "Dropdown 1"
+    },
+    {
+      "type": "text",
+      "id": "group_1_label",
+      "label": "Label",
+      "default": "Objecten"
+    },
+    {
+      "type": "link_list",
+      "id": "group_1_menu",
+      "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Dropdown 2"
+    },
+    {
+      "type": "text",
+      "id": "group_2_label",
+      "label": "Label",
+      "default": "Bloemen & Planten"
+    },
+    {
+      "type": "link_list",
+      "id": "group_2_menu",
+      "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Dropdown 3"
+    },
+    {
+      "type": "text",
+      "id": "group_3_label",
+      "label": "Label",
+      "default": "Cadeaus"
+    },
+    {
+      "type": "link_list",
+      "id": "group_3_menu",
+      "label": "Menu"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [
+    {
+      "name": "Collectie hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,299 @@
+{%- render 'section-typo' -%}
+<section class="igram full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="igram__inner">
+
+    <div class="igram__tekst">
+      <h2 class="igram__heading">
+        {{ section.settings.heading | default: 'Dagelijks vers op' | escape }}<br>
+        <em class="igram__handle">{{ section.settings.instagram_handle | default: '@hofvanlaren' | escape }}</em>
+      </h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="igram__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+      <a
+        href="{{ section.settings.instagram_url | default: 'https://instagram.com' }}"
+        target="_blank"
+        rel="noopener"
+        class="igram__cta"
+        aria-label="Volg {{ section.settings.instagram_handle | default: '@hofvanlaren' }} op Instagram"
+      >
+        <svg class="igram__cta-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+          <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+        </svg>
+        {{ section.settings.cta_text | default: 'Volg ons op Instagram' }}
+      </a>
+    </div>
+
+    <div class="igram__fotos">
+      {% for i in (1..6) %}
+        {% assign img_key = 'foto_' | append: i %}
+        {% assign url_key = 'url_' | append: i %}
+        {% assign img_val = section.settings[img_key] %}
+        {% assign url_val = section.settings[url_key] | default: section.settings.instagram_url %}
+        {% if img_val != blank %}
+          <a
+            href="{{ url_val | default: '#' }}"
+            target="_blank"
+            rel="noopener"
+            class="igram__foto-link"
+            aria-label="Bekijk op Instagram"
+          >
+            <img
+              src="{{ img_val | image_url: width: 400 }}"
+              alt="{{ img_val.alt | default: 'Instagram foto' | escape }}"
+              width="400"
+              loading="lazy"
+              class="igram__foto"
+            >
+          </a>
+        {% else %}
+          <div class="igram__foto-link igram__foto--leeg"></div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .igram {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    padding: 5rem 0;
+  }
+
+  .igram__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .igram__tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .igram__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    color: var(--color-background);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .igram__handle {
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .igram__subtitle {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(245,238,228,0.7);
+    margin: 0;
+    max-width: 320px;
+  }
+
+  .igram__subtitle strong, .igram__subtitle a {
+    color: var(--color-background);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .igram__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 3px;
+    width: fit-content;
+    letter-spacing: 0.01em;
+    transition: box-shadow 0.28s cubic-bezier(0.4,0,0.2,1),
+                background-color 0.22s;
+  }
+
+  .igram__cta:hover {
+    box-shadow:
+      0 0 0 2px var(--color-foreground),
+      0 0 0 4px var(--color-background);
+  }
+
+  .igram__cta-icon {
+    flex-shrink: 0;
+  }
+
+  /* Foto grid 2×3 */
+  .igram__fotos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .igram__foto-link {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    aspect-ratio: 1;
+    background: rgba(245,238,228,0.06);
+  }
+
+  .igram__foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.2s;
+  }
+
+  .igram__foto-link:hover .igram__foto {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  .igram__foto--leeg {
+    background: rgba(245,238,228,0.06);
+  }
+
+  @media (max-width: 900px) {
+    .igram__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .igram__fotos {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .igram {
+      padding: 3.5rem 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Instagram CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Koptekst",
+      "default": "Dagelijks vers op"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "@hofvanlaren"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Ondertitel",
+      "default": "<p>Volg Marchien voor nieuwe collecties, stylingtips en inkoopreizen naar <strong>Denemarken</strong>.</p>"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram profiellink"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knoptekst",
+      "default": "Volg ons op Instagram"
+    },
+    {
+      "type": "header",
+      "content": "Instagram foto's (6 stuks)"
+    },
+    {
+      "type": "image_picker",
+      "id": "foto_1",
+      "label": "Foto 1"
+    },
+    {
+      "type": "url",
+      "id": "url_1",
+      "label": "Link foto 1 (optioneel)"
+    },
+    {
+      "type": "image_picker",
+      "id": "foto_2",
+      "label": "Foto 2"
+    },
+    {
+      "type": "url",
+      "id": "url_2",
+      "label": "Link foto 2 (optioneel)"
+    },
+    {
+      "type": "image_picker",
+      "id": "foto_3",
+      "label": "Foto 3"
+    },
+    {
+      "type": "url",
+      "id": "url_3",
+      "label": "Link foto 3 (optioneel)"
+    },
+    {
+      "type": "image_picker",
+      "id": "foto_4",
+      "label": "Foto 4"
+    },
+    {
+      "type": "url",
+      "id": "url_4",
+      "label": "Link foto 4 (optioneel)"
+    },
+    {
+      "type": "image_picker",
+      "id": "foto_5",
+      "label": "Foto 5"
+    },
+    {
+      "type": "url",
+      "id": "url_5",
+      "label": "Link foto 5 (optioneel)"
+    },
+    {
+      "type": "image_picker",
+      "id": "foto_6",
+      "label": "Foto 6"
+    },
+    {
+      "type": "url",
+      "id": "url_6",
+      "label": "Link foto 6 (optioneel)"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [
+    {
+      "name": "Instagram CTA"
+    }
+  ]
+}
+{% endschema %}

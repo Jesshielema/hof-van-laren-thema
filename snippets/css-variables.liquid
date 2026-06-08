@@ -1,0 +1,142 @@
+{% style %}
+  :root {
+    /* Typografie — instelbaar via theme editor */
+    --font-body:    {{ settings.font_body    | default: "'Archivo', 'Helvetica Neue', Arial, sans-serif" }};
+    --font-heading: {{ settings.font_heading | default: "'skeena', 'Cormorant Garamond', Georgia, serif" }};
+
+    /* Layout */
+    --page-width:  1280px;
+    --page-margin: {{ settings.min_page_margin | default: 20 }}px;
+
+    /* Kleuren — instelbaar via theme editor */
+    --color-background:  {{ settings.color_background | default: '#F5EEE4' }};
+    --color-bg-2:        {{ settings.color_bg_2       | default: '#E9E1D8' }};
+    --color-bg-3:        #D8C0A3;
+    --color-border:      {{ settings.color_border     | default: '#D8C0A3' }};
+    --color-foreground:  {{ settings.color_foreground | default: '#1C1410' }};
+    --color-muted:       #7D6B5A;
+    --color-accent:      {{ settings.color_accent     | default: '#900020' }};
+    --color-accent-dark: {{ settings.color_accent     | default: '#900020' | color_darken: 15 }};
+    --color-gold:        {{ settings.color_gold       | default: '#C9A85C' }};
+    --color-gold-light:  {{ settings.color_gold       | default: '#C9A85C' | color_lighten: 20 }};
+
+    /* Backwards compat */
+    --color-brand-dark:   {{ settings.color_background | default: '#1C1410' }};
+    --color-brand-orange: {{ settings.color_gold       | default: '#C9A85C' }};
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.45);
+
+    /* Transitions */
+    --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+
+    /* Border radius */
+    --radius:      10px;
+    --radius-sm:   6px;
+    --radius-pill: 100px;
+  }
+
+  {% comment %}
+    Kleurschema's — één klik wisselt het volledige kleurenpalet.
+    Elk schema overschrijft ALLE kleurvariabelen.
+  {% endcomment %}
+  {% if settings.season == 'standaard' %}
+    :root {
+      --color-background: #F5EEE4;
+      --color-bg-2:       #E9E1D8;
+      --color-border:     #D8C0A3;
+      --color-foreground: #1C1410;
+      --color-muted:      #7D6B5A;
+      --color-gold:       #C9A85C;
+      --color-gold-light: #D9C080;
+      --color-accent:     #900020;
+      --color-accent-dark:#6E0018;
+    }
+  {% elsif settings.season == 'valentijn' %}
+    :root {
+      --color-background: #FBF0F4;
+      --color-bg-2:       #F0DDE6;
+      --color-border:     #E0BECA;
+      --color-foreground: #2A0814;
+      --color-muted:      #8B5468;
+      --color-gold:       #CC6680;
+      --color-gold-light: #DD88A0;
+      --color-accent:     #B5004E;
+      --color-accent-dark:#8E003D;
+    }
+  {% elsif settings.season == 'pasen' %}
+    :root {
+      --color-background: #F2F5EE;
+      --color-bg-2:       #E2EAD8;
+      --color-border:     #C0D4A8;
+      --color-foreground: #1A2814;
+      --color-muted:      #587248;
+      --color-gold:       #8BAD64;
+      --color-gold-light: #A8C882;
+      --color-accent:     #4A7C59;
+      --color-accent-dark:#386045;
+    }
+  {% elsif settings.season == 'moederdag' %}
+    :root {
+      --color-background: #F7F0F5;
+      --color-bg-2:       #EDE0EA;
+      --color-border:     #D8C0D4;
+      --color-foreground: #200A20;
+      --color-muted:      #7D5878;
+      --color-gold:       #C490B8;
+      --color-gold-light: #D8A8CC;
+      --color-accent:     #8B3A6B;
+      --color-accent-dark:#6C2C52;
+    }
+  {% elsif settings.season == 'zomer' %}
+    :root {
+      --color-background: #FFF8EE;
+      --color-bg-2:       #F5E8D0;
+      --color-border:     #E8C880;
+      --color-foreground: #1C1408;
+      --color-muted:      #8B6830;
+      --color-gold:       #E8A830;
+      --color-gold-light: #F0C050;
+      --color-accent:     #C45A00;
+      --color-accent-dark:#9A4600;
+    }
+  {% elsif settings.season == 'herfst' %}
+    :root {
+      --color-background: #F7EEE0;
+      --color-bg-2:       #EAD8C0;
+      --color-border:     #D4AA78;
+      --color-foreground: #1C1008;
+      --color-muted:      #8B6030;
+      --color-gold:       #C9892C;
+      --color-gold-light: #DDA848;
+      --color-accent:     #8B3A00;
+      --color-accent-dark:#6C2C00;
+    }
+  {% elsif settings.season == 'kerst' %}
+    :root {
+      --color-background: #F0F4F0;
+      --color-bg-2:       #D8E8D8;
+      --color-border:     #A8C8A8;
+      --color-foreground: #0C180C;
+      --color-muted:      #487848;
+      --color-gold:       #C9A85C;
+      --color-gold-light: #D9C080;
+      --color-accent:     #1C3D2A;
+      --color-accent-dark:#142E1E;
+    }
+  {% elsif settings.season == 'rouw' %}
+    :root {
+      --color-background: #F0EFED;
+      --color-bg-2:       #E4E2E0;
+      --color-border:     #C8C4C0;
+      --color-foreground: #2A2828;
+      --color-muted:      #787470;
+      --color-gold:       #9B9B8A;
+      --color-gold-light: #B8B8A8;
+      --color-accent:     #404040;
+      --color-accent-dark:#2A2A2A;
+    }
+  {% endif %}
+{% endstyle %}

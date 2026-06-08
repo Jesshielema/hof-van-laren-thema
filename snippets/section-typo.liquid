@@ -1,0 +1,30 @@
+{%- comment -%}
+  section-typo.liquid
+  Gebruik: {%- render 'section-typo' -%}
+  Daarna: <section ... {%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+
+  Leest de typografie-instellingen van de huidige sectie en bouwt
+  een inline style-string op met CSS custom properties.
+{%- endcomment -%}
+{%- assign s_style = '' -%}
+{%- unless section.settings.heading_font == blank or section.settings.heading_font == 'inherit' -%}
+  {%- assign s_style = s_style | append: '--s-font-heading:' | append: section.settings.heading_font | append: ';' -%}
+{%- endunless -%}
+{%- unless section.settings.heading_weight == blank or section.settings.heading_weight == 'inherit' -%}
+  {%- assign s_style = s_style | append: '--s-weight-heading:' | append: section.settings.heading_weight | append: ';' -%}
+{%- endunless -%}
+{%- unless section.settings.heading_style == blank or section.settings.heading_style == 'inherit' -%}
+  {%- assign s_style = s_style | append: '--s-style-heading:' | append: section.settings.heading_style | append: ';' -%}
+{%- endunless -%}
+{%- unless section.settings.heading_color == blank -%}
+  {%- assign s_style = s_style | append: '--s-color-heading:' | append: section.settings.heading_color | append: ';' -%}
+{%- endunless -%}
+{%- unless section.settings.body_font == blank or section.settings.body_font == 'inherit' -%}
+  {%- assign s_style = s_style | append: '--s-font-body:' | append: section.settings.body_font | append: ';' -%}
+{%- endunless -%}
+{%- unless section.settings.body_weight == blank or section.settings.body_weight == 'inherit' -%}
+  {%- assign s_style = s_style | append: '--s-weight-body:' | append: section.settings.body_weight | append: ';' -%}
+{%- endunless -%}
+{%- unless section.settings.body_color == blank -%}
+  {%- assign s_style = s_style | append: '--s-color-body:' | append: section.settings.body_color | append: ';' -%}
+{%- endunless -%}

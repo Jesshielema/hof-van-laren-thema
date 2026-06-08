@@ -1,0 +1,190 @@
+{%- render 'section-typo' -%}
+<section class="filosofie full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="filosofie__inner">
+
+    <div class="filosofie__tekst">
+      {% if section.settings.label != blank %}
+        <span class="filosofie__label">{{ section.settings.label | escape }}</span>
+      {% endif %}
+      <h2 class="filosofie__title">{{ section.settings.title | default: 'Waarom geen standaard boeketten?' }}</h2>
+      <div class="filosofie__rule" aria-hidden="true"></div>
+      {% if section.settings.body != blank %}
+        <div class="filosofie__body">{{ section.settings.body }}</div>
+      {% endif %}
+    </div>
+
+    <div class="filosofie__kernwaarden">
+      {% for i in (1..4) %}
+        {% assign val_key = 'waarde_' | append: i %}
+        {% assign val = section.settings[val_key] %}
+        {% if val != blank %}
+          <div class="filosofie__waarde">
+            <span class="filosofie__waarde-streep" aria-hidden="true"></span>
+            {{ val | escape }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .filosofie {
+    background-color: var(--color-gold);
+    color: var(--color-background);
+    padding: 5rem 0;
+  }
+
+  .filosofie__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .filosofie__label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245,238,228,0.65);
+    margin-bottom: 1rem;
+  }
+
+  .filosofie__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-background);
+    margin: 0 0 1.25rem;
+    line-height: 1.15;
+  }
+
+  .filosofie__rule {
+    width: 48px;
+    height: 1px;
+    background-color: rgba(245,238,228,0.4);
+    margin-bottom: 1.5rem;
+  }
+
+  .filosofie__body {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(245,238,228,0.85);
+  }
+
+  .filosofie__body p { margin: 0 0 1rem; }
+  .filosofie__body p:last-child { margin-bottom: 0; }
+  .filosofie__body strong {
+    font-weight: 600;
+    color: var(--color-background);
+  }
+
+  /* Kernwaarden */
+  .filosofie__kernwaarden {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .filosofie__waarde {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-background);
+    line-height: 1.3;
+  }
+
+  .filosofie__waarde-streep {
+    display: block;
+    width: 28px;
+    height: 1px;
+    background-color: rgba(245,238,228,0.5);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .filosofie__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .filosofie {
+      padding: 3.5rem 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Filosofie – Waarom wij",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Klein label",
+      "default": "Onze aanpak"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Waarom geen standaard boeketten?"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Verhaal",
+      "default": "<p>Geen enkel boeket is hetzelfde. Wij geloven dat bloemen persoonlijk moeten zijn. Daarom werkt Hof van Laren niet met standaard boeketten van een foto, maar met <strong>unieke creaties</strong> die worden samengesteld op basis van jouw gelegenheid, wensen en de mooiste bloemen van dat moment.</p><p>Marchien luistert naar jouw verhaal en maakt een arrangement dat daar perfect bij past. Niet van de plank, maar van het hart — met aandacht voor kleur, sfeer en de ruimte waar het in komt.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Kernwaarden (rechterkolom)"
+    },
+    {
+      "type": "text",
+      "id": "waarde_1",
+      "label": "Waarde 1",
+      "default": "Persoonlijk samengesteld"
+    },
+    {
+      "type": "text",
+      "id": "waarde_2",
+      "label": "Waarde 2",
+      "default": "Elk boeket uniek"
+    },
+    {
+      "type": "text",
+      "id": "waarde_3",
+      "label": "Waarde 3",
+      "default": "Bloemen van het seizoen"
+    },
+    {
+      "type": "text",
+      "id": "waarde_4",
+      "label": "Waarde 4",
+      "default": "Gemaakt voor jouw moment"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [{ "name": "Filosofie – Waarom wij" }]
+}
+{% endschema %}

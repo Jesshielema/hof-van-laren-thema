@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "label": "Hof van Laren",
+        "title": "Boeketten bestellen",
+        "subtitle": "Persoonlijk samengesteld door Marchien. Geen standaard boeketten — elk boeket uniek, gemaakt voor jouw moment."
+      }
+    },
+    "stappen": {
+      "type": "stappen",
+      "settings": {
+        "label": "Het proces",
+        "title": "Hoe werkt het?",
+        "stap_1_title": "Kies een gelegenheid",
+        "stap_1_body": "Verjaardag, liefde, trouwen, rouw — vertel ons voor wie het boeket is.",
+        "stap_2_title": "Kies formaat en stijl",
+        "stap_2_body": "Klein, middel of groot — en of je voorkeur uitgaat naar een wilde, klassieke of minimalistische stijl.",
+        "stap_3_title": "Geef aan wat je niet wilt",
+        "stap_3_body": "Allergieën, bloemen die je niet mooi vindt — we houden er rekening mee.",
+        "stap_4_title": "Marchien stelt jouw boeket samen",
+        "stap_4_body": "Met de mooiste bloemen van dat moment maakt Marchien een uniek boeket speciaal voor jou."
+      }
+    },
+    "filosofie": {
+      "type": "filosofie",
+      "settings": {
+        "label": "Onze aanpak",
+        "title": "Waarom geen standaard boeketten?",
+        "body": "<p>Geen enkel boeket is hetzelfde. Wij geloven dat bloemen persoonlijk moeten zijn. Daarom werkt Hof van Laren niet met standaard boeketten van een foto, maar met <strong>unieke creaties<\/strong> die worden samengesteld op basis van jouw gelegenheid, wensen en de mooiste bloemen van dat moment.<\/p><p>Marchien luistert naar jouw verhaal en maakt een arrangement dat daar perfect bij past. Niet van de plank, maar van het hart — met aandacht voor kleur, sfeer en de ruimte waar het in komt.<\/p>",
+        "waarde_1": "Persoonlijk samengesteld",
+        "waarde_2": "Elk boeket uniek",
+        "waarde_3": "Bloemen van het seizoen",
+        "waarde_4": "Gemaakt voor jouw moment"
+      }
+    },
+    "marchien": {
+      "type": "marchien-vertrouwen",
+      "settings": {
+        "label": "Over Marchien",
+        "title": "Waarom vertrouwen op Marchien?",
+        "body": "<p>Marchien werkt al jaren met bloemen en kent als geen ander hoe je met kleur, vorm en geur een gevoel kunt oproepen. Ze luistert naar jouw verhaal en maakt een boeket dat past bij dat specifieke moment.<\/p><p>Geen catalogus, geen standaard. Alleen <strong>aandacht, vakmanschap en de mooiste bloemen van dat seizoen<\/strong>.<\/p>",
+        "usp_1": "Jarenlange ervaring met bloemen en interieurstyling",
+        "usp_2": "Elk boeket persoonlijk samengesteld",
+        "usp_3": "Altijd bloemen van het seizoen",
+        "usp_4": "Afhalen in Zuidlaren of bezorgen op afspraak",
+        "cta_text": "Bestel jouw boeket",
+        "cta_url": "\/pages\/bestelformulier"
+      }
+    },
+    "gelegenheden": {
+      "type": "gelegenheden",
+      "settings": {
+        "occasion_1_text": "Verjaardag",
+        "occasion_1_url": "\/pages\/verjaardag",
+        "occasion_2_text": "Liefde",
+        "occasion_2_url": "\/pages\/liefde",
+        "occasion_3_text": "Trouwdag",
+        "occasion_3_url": "\/pages\/trouwdag",
+        "occasion_4_text": "Felicitatie",
+        "occasion_4_url": "\/pages\/felicitatie",
+        "occasion_5_text": "Rouw",
+        "occasion_5_url": "\/pages\/rouw",
+        "occasion_6_text": "Zijdebloemen",
+        "occasion_6_url": "\/collections\/zijdebloemen"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "stappen",
+    "filosofie",
+    "marchien",
+    "gelegenheden"
+  ]
+}

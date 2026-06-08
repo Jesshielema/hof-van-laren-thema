@@ -1,0 +1,336 @@
+/* ================================================================
+   MICRO-ANIMATIES — Hof van Laren
+   Chique, subtiel, respecteert prefers-reduced-motion
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ----------------------------------------------------------------
+   1. FOCUS RING — goud voor toetsenbordnavigatie
+   ---------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ----------------------------------------------------------------
+   2. NAVIGATIELINKS — underline groeit vanuit het midden
+   ---------------------------------------------------------------- */
+.header__nav-link {
+  position: relative;
+  transition: opacity 0.2s;
+}
+.header__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background: var(--color-gold);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.header__nav-link:hover::after,
+.header__nav-link--active::after {
+  left: 0;
+  right: 0;
+}
+
+/* ----------------------------------------------------------------
+   3. HEADER ICONEN — zacht schalen
+   ---------------------------------------------------------------- */
+.header__icon {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s;
+}
+.header__icon:hover {
+  transform: scale(1.12);
+  opacity: 1 !important;
+}
+
+/* ----------------------------------------------------------------
+   4. GLOBALE BUTTON KLASSEN — lift + gloed + shimmer
+   ---------------------------------------------------------------- */
+.btn-primary,
+.btn-gold {
+  position: relative;
+  overflow: hidden;
+  transition: background-color var(--transition),
+              box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-outline {
+  transition: border-color var(--transition),
+              background-color var(--transition),
+              transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(144, 0, 32, 0.28);
+}
+
+/* Goud-knop: dubbele ring — crème tussenruimte + gouden buitenrand */
+.btn-gold:hover {
+  box-shadow:
+    0 0 0 2px var(--color-background),
+    0 0 0 4px var(--color-gold);
+}
+.btn-gold:active {
+  box-shadow: none;
+  transition-duration: 0.08s;
+}
+
+.btn-outline:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(28, 20, 16, 0.1);
+}
+.btn-primary:active,
+.btn-outline:active {
+  transform: translateY(0);
+  transition-duration: 0.08s;
+}
+
+/* Shimmer alleen op primaire (rode) knop — niet op goud */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -90%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+  transform: skewX(-15deg);
+  transition: left 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.btn-primary:hover::before {
+  left: 140%;
+}
+
+/* ----------------------------------------------------------------
+   5. SECTIE-SPECIFIEKE CTA KNOPPEN — lift + gloed
+   ---------------------------------------------------------------- */
+
+/* Gevulde goudkleurige knoppen */
+.homepage-hero__cta--primary,
+.cart-empty__cta--primary,
+.not-found__cta--primary,
+.marchien-quote__link,
+.despots__cta,
+.winkel__appointment-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Goud-CTAs: dubbele ring op hover */
+.homepage-hero__cta--primary:hover,
+.cart-empty__cta--primary:hover,
+.not-found__cta--primary:hover {
+  box-shadow:
+    0 0 0 2px var(--color-background),
+    0 0 0 4px var(--color-gold) !important;
+  transform: none !important;
+}
+
+.cart-summary__checkout:hover {
+  box-shadow:
+    0 0 0 2px var(--color-background),
+    0 0 0 4px var(--color-gold);
+  transform: none;
+}
+
+/* Outline/secondary knoppen */
+.homepage-hero__cta--secondary:hover,
+.cart-empty__cta--outline:hover,
+.not-found__cta--secondary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 16px rgba(28, 20, 16, 0.1) !important;
+}
+
+
+/* ----------------------------------------------------------------
+   6. ARROW NUDGE — → beweegt mee op hover
+   Wraps de → in een span.cta-arrow via JS (zie theme.liquid)
+   ---------------------------------------------------------------- */
+.cta-arrow {
+  display: inline-block;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+*:hover > .cta-arrow,
+*:hover .cta-arrow {
+  transform: translateX(5px);
+}
+
+/* ----------------------------------------------------------------
+   7. KAARTJES & FOTO'S — zachte lift op hover
+   ---------------------------------------------------------------- */
+.product-card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(28, 20, 16, 0.12);
+}
+
+/* ----------------------------------------------------------------
+   8. ZOEKBALK — gouden rand animatie op focus
+   ---------------------------------------------------------------- */
+.search-overlay__form {
+  position: relative;
+}
+.search-overlay__form::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.search-overlay__form:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* ----------------------------------------------------------------
+   9. MOBIELE NAV LINKS
+   ---------------------------------------------------------------- */
+.mobile-nav__link {
+  position: relative;
+  transition: color 0.2s, padding-left 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mobile-nav__link:hover {
+  padding-left: 8px;
+  color: var(--color-gold);
+}
+
+/* ----------------------------------------------------------------
+   10. FOOTER LINKS — underline groeit van links
+   ---------------------------------------------------------------- */
+footer a:not([class]),
+.footer__link,
+[class*="footer"] a {
+  position: relative;
+  text-decoration: none;
+}
+footer a:not([class])::after,
+.footer__link::after,
+[class*="footer"] a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+footer a:not([class]):hover::after,
+.footer__link:hover::after,
+[class*="footer"] a:hover::after {
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+   11. SCROLL-REVEAL — secties faden subtiel op
+   Klasse .reveal wordt door JS toegevoegd aan sectie-elementen,
+   .is-visible wordt actief zodra het element in beeld komt.
+   ---------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered kinderen */
+.reveal-group > *:nth-child(1) { transition-delay: 0s; }
+.reveal-group > *:nth-child(2) { transition-delay: 0.08s; }
+.reveal-group > *:nth-child(3) { transition-delay: 0.16s; }
+.reveal-group > *:nth-child(4) { transition-delay: 0.24s; }
+.reveal-group > *:nth-child(5) { transition-delay: 0.32s; }
+.reveal-group > *:nth-child(6) { transition-delay: 0.40s; }
+
+/* ----------------------------------------------------------------
+   12. GELDIGE TRANSITIES VOOR GOLD RULE
+   ---------------------------------------------------------------- */
+.gold-rule {
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ----------------------------------------------------------------
+   13. WINKELWAGEN BADGE — pop animatie bij update
+   ---------------------------------------------------------------- */
+@keyframes badge-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.55); }
+  100% { transform: scale(1); }
+}
+.header__cart-badge--pop {
+  animation: badge-pop 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ----------------------------------------------------------------
+   14. PAGINA LAAD — subtiele fade in van content
+   ---------------------------------------------------------------- */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-enter {
+  animation: page-enter 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ----------------------------------------------------------------
+   15. INPUT FOCUS — goud border groeit in
+   ---------------------------------------------------------------- */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+textarea,
+select {
+  transition: border-color 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px rgba(201, 168, 92, 0.18);
+  outline: none;
+}

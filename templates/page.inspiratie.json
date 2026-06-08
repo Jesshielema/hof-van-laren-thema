@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "label": "Hof van Laren",
+        "title": "Inspiratie",
+        "subtitle": "Ideeën voor thuis, klantenverhalen en het laatste nieuws van Marchien."
+      }
+    },
+    "feature": {
+      "type": "inspiratie-feature",
+      "settings": {
+        "heading": "Van winkel naar",
+        "heading_highlight": "woonkamer!",
+        "body": "<p>Bloemen en mooie objecten brengen sfeer in huis, maar soms weet je niet waar je moet beginnen.<\/p><p>Hier zie je hoe andere klanten hun Hof van Laren-aankopen thuis hebben gestyled — van een <strong>Des Pots<\/strong> vaas in de vensterbank tot een <strong>tak<\/strong> die een hele kamer verandert. En elke dag deelt Marchien nieuwe ideeën op <a href=\"https:\/\/instagram.com\/hofvanlaren\">Instagram<\/a>.<\/p><p>Laat je raken. En kom gerust langs als je wil sparren.<\/p>",
+        "instagram_handle": "@hofvanlaren",
+        "facebook_handle": "@hofvanlaren"
+      }
+    },
+    "klanten": {
+      "type": "klantenfoto",
+      "settings": {
+        "title": "Foto's van tevreden",
+        "title_bold": "klanten",
+        "subtitle": "Stuur een foto van jouw aankoop thuis naar @hofvanlaren — we delen hem graag!"
+      }
+    },
+    "instagram": {
+      "type": "instagram-cta",
+      "settings": {
+        "heading": "Dagelijks vers op",
+        "instagram_handle": "@hofvanlaren",
+        "subtitle": "<p>Volg Marchien voor nieuwe collecties, stylingtips en inkoopreizen naar <strong>Denemarken<\/strong>.<\/p>"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "feature",
+    "klanten",
+    "instagram"
+  ]
+}

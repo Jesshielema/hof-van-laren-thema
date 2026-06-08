@@ -1,0 +1,291 @@
+<header class="site-header">
+  <div class="header__bar">
+
+    <button
+      class="header__hamburger"
+      aria-label="{{ 'general.accessibility.open_menu' | t }}"
+      aria-expanded="false"
+      data-toggle="mobile-nav"
+    >
+      <svg width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect width="26" height="2.5" rx="1.25" fill="currentColor"/>
+        <rect y="7.5" width="26" height="2.5" rx="1.25" fill="currentColor"/>
+        <rect y="15" width="26" height="2.5" rx="1.25" fill="currentColor"/>
+      </svg>
+    </button>
+
+    <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }}">
+      {% if section.settings.logo != blank %}
+        <img
+          src="{{ section.settings.logo | image_url: width: 180 }}"
+          alt="{{ shop.name }}"
+          width="180"
+          height="90"
+          loading="eager"
+          class="header__logo-img"
+        >
+      {% else %}
+        <span class="header__logo-text">{{ shop.name }}</span>
+      {% endif %}
+    </a>
+
+    <div class="header__icons">
+      <a href="{{ routes.search_url }}" class="header__icon" aria-label="{{ 'general.search.title' | t }}">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <circle cx="9.5" cy="9.5" r="8.5" stroke="currentColor" stroke-width="2"/>
+          <line x1="15.8" y1="16.2" x2="21" y2="21.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <a href="{{ routes.cart_url }}" class="header__icon header__cart-icon" aria-label="{{ 'general.cart.title' | t }}">
+        {% if cart.item_count > 0 %}
+          <span class="header__cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <path d="M1 1.5h3.2l2.6 11.8a2 2 0 0 0 2 1.7h8.8a2 2 0 0 0 1.96-1.6l1.44-7.4H5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9" cy="19.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="17" cy="19.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+
+  <nav class="header__nav" aria-label="{{ 'general.accessibility.main_nav' | t }}">
+    {% for link in section.settings.menu.links %}
+      <a
+        href="{{ link.url }}"
+        class="header__nav-link{% if link.active %} header__nav-link--active{% endif %}"
+        {% if link.active %}aria-current="page"{% endif %}
+      >{{ link.title | escape }}</a>
+    {% endfor %}
+  </nav>
+
+  <nav class="mobile-nav" id="mobile-nav" hidden>
+    {% for link in section.settings.menu.links %}
+      <a
+        href="{{ link.url }}"
+        class="mobile-nav__link{% if link.active %} mobile-nav__link--active{% endif %}"
+        {% if link.active %}aria-current="page"{% endif %}
+      >{{ link.title | escape }}</a>
+    {% endfor %}
+  </nav>
+</header>
+
+{% stylesheet %}
+  .site-header {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* Top bar: hamburger | logo | icons */
+  .header__bar {
+    display: grid;
+    grid-template-columns: 48px 1fr 72px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    gap: 1rem;
+  }
+
+  /* Hamburger — altijd zichtbaar (ook desktop) */
+  .header__hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-foreground);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-self: start;
+    line-height: 0;
+  }
+
+  /* Logo gecentreerd */
+  .header__logo {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+  }
+
+  .header__logo-img {
+    display: block;
+    height: 90px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+  }
+
+  .header__logo-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--color-foreground);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* Iconen rechts */
+  .header__icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    color: var(--color-foreground);
+  }
+
+  .header__icon {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  .header__icon:hover {
+    opacity: 1;
+  }
+
+  .header__cart-count {
+    position: absolute;
+    top: -0.45rem;
+    right: -0.45rem;
+    background-color: var(--color-accent);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* Desktop navigatie — gecentreerd onder logo */
+  .header__nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 2rem 0.85rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .header__nav-link {
+    text-decoration: none;
+    color: var(--color-foreground);
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+
+  .header__nav-link:hover {
+    opacity: 1;
+  }
+
+  .header__nav-link--active {
+    opacity: 1;
+    font-weight: 500;
+    border-bottom: 1.5px solid var(--color-foreground);
+    padding-bottom: 1px;
+  }
+
+  /* Mobiele navigatie (uitgeklapt via hamburger) */
+  .mobile-nav {
+    background-color: var(--color-background);
+    border-top: 1px solid rgba(28,20,16,0.12);
+    padding: 0 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-nav[hidden] {
+    display: none;
+  }
+
+  .mobile-nav__link {
+    display: block;
+    text-decoration: none;
+    color: var(--color-foreground);
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(28,20,16,0.08);
+    transition: color 0.2s;
+  }
+
+  .mobile-nav__link:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-nav__link:hover {
+    color: var(--color-gold);
+  }
+
+  .mobile-nav__link--active {
+    color: var(--color-foreground);
+    font-weight: 500;
+  }
+
+  /* Op mobiel: verberg desktop nav, toon alleen mobiele nav via hamburger */
+  @media (max-width: 768px) {
+    .header__logo-img {
+      height: 60px;
+    }
+
+    .header__nav {
+      display: none;
+    }
+
+    .header__bar {
+      padding: 0.6rem 1.25rem;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var btn = document.querySelector('[data-toggle="mobile-nav"]');
+    var nav = document.getElementById('mobile-nav');
+    if (!btn || !nav) return;
+
+    btn.addEventListener('click', function () {
+      var isOpen = !nav.hidden;
+      nav.hidden = isOpen;
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigatie",
+      "default": "main-menu"
+    },
+  ]
+}
+{% endschema %}

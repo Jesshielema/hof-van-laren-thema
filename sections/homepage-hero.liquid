@@ -1,0 +1,311 @@
+{%- render 'section-typo' -%}
+<section class="homepage-hero full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+
+  {% if section.settings.background_image != blank %}
+    <div class="homepage-hero__bg" aria-hidden="true">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 1440 }}"
+        alt=""
+        width="1440"
+        loading="eager"
+        class="homepage-hero__bg-img"
+      >
+    </div>
+  {% endif %}
+
+  <div class="homepage-hero__brand" aria-hidden="true">{{ shop.name }}</div>
+
+  <div class="homepage-hero__image-wrap">
+    {% if section.settings.hero_image != blank %}
+      <img
+        src="{{ section.settings.hero_image | image_url: width: 700 }}"
+        alt="{{ section.settings.hero_image.alt | default: shop.name | escape }}"
+        width="600"
+        loading="eager"
+        class="homepage-hero__image"
+      >
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'homepage-hero__image placeholder' }}
+    {% endif %}
+  </div>
+
+  <div class="homepage-hero__bottom">
+    <div class="homepage-hero__text">
+      {% if section.settings.heading != blank %}
+        <p class="homepage-hero__heading">{{ section.settings.heading }}</p>
+      {% endif %}
+      {% if section.settings.heading_highlight != blank %}
+        <span class="homepage-hero__heading-highlight">{{ section.settings.heading_highlight }}</span>
+      {% endif %}
+    </div>
+    <div class="homepage-hero__ctas">
+      {% if section.settings.cta_url != blank %}
+        <a href="{{ section.settings.cta_url }}" class="homepage-hero__cta homepage-hero__cta--primary">
+          {{ section.settings.cta_text | default: 'Online bloemen bestellen' | escape }} →
+        </a>
+      {% endif %}
+      {% if section.settings.cta_2_url != blank %}
+        <a href="{{ section.settings.cta_2_url }}" class="homepage-hero__cta homepage-hero__cta--secondary">
+          {{ section.settings.cta_2_text | default: 'Bezoek de winkel' | escape }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+</section>
+
+{% stylesheet %}
+  .homepage-hero {
+    background-color: var(--color-background);
+    position: relative;
+    overflow: hidden;
+    min-height: 680px;
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* Achtergrondafbeelding */
+  .homepage-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .homepage-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.18;
+  }
+
+  /* Winkelnaam — groot, gecentreerd, achter de foto */
+  .homepage-hero__brand {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 700;
+    color: var(--color-foreground);
+    opacity: 0.12;
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.02em;
+  }
+
+  /* Gecentreerde productafbeelding */
+  .homepage-hero__image-wrap {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .homepage-hero__image {
+    height: 100%;
+    width: auto;
+    max-width: 560px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 12px 32px rgba(0,0,0,0.25));
+  }
+
+  .homepage-hero__image.placeholder {
+    width: 340px;
+    height: 100%;
+    opacity: 0.35;
+  }
+
+  /* Onderste balk: tekst links, knoppen rechts */
+  .homepage-hero__bottom {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    max-width: 1280px;
+    padding: 2rem 2rem;
+    gap: 2rem;
+  }
+
+  .homepage-hero__text {
+    max-width: 340px;
+  }
+
+  .homepage-hero__heading {
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-weight: 400;
+    color: var(--color-foreground);
+    line-height: 1.5;
+    margin: 0 0 0.2rem;
+  }
+
+  .homepage-hero__heading-highlight {
+    display: block;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    color: var(--color-gold);
+    line-height: 1.4;
+  }
+
+  .homepage-hero__ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .homepage-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .homepage-hero__cta--primary {
+    background-color: var(--color-gold);
+    color: var(--color-background);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .homepage-hero__cta--primary:hover {
+    background-color: var(--color-gold-light);
+  }
+
+  .homepage-hero__cta--secondary {
+    background-color: transparent;
+    color: var(--color-foreground);
+    border: 1.5px solid rgba(28,20,16,0.25);
+  }
+
+  .homepage-hero__cta--secondary:hover {
+    border-color: rgba(28,20,16,0.45);
+    background-color: rgba(28,20,16,0.05);
+  }
+
+  @media (max-width: 768px) {
+    .homepage-hero {
+      min-height: 520px;
+    }
+
+    .homepage-hero__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.5rem;
+      gap: 1rem;
+    }
+
+    .homepage-hero__ctas {
+      align-items: flex-start;
+    }
+
+    .homepage-hero__brand {
+      font-size: clamp(2rem, 10vw, 4rem);
+    }
+
+    .homepage-hero__image {
+      max-width: 320px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero sectie",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Afbeeldingen"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Achtergrondafbeelding (subtiel)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Productafbeelding (gecentreerd)"
+    },
+    {
+      "type": "header",
+      "content": "Tekst links onderin"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Hoofdtekst",
+      "default": "Van een klein idee\ntot een persoonlijk boeket"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Gemarkeerde tekst (cursief goud)",
+      "default": "vol gevoel"
+    },
+    {
+      "type": "header",
+      "content": "Knop 1 (goud, rechts onderin)"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knoptekst",
+      "default": "Online bloemen bestellen"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knoplink"
+    },
+    {
+      "type": "header",
+      "content": "Knop 2 (outline, rechts onderin)"
+    },
+    {
+      "type": "text",
+      "id": "cta_2_text",
+      "label": "Knoptekst",
+      "default": "Bezoek de winkel"
+    },
+    {
+      "type": "url",
+      "id": "cta_2_url",
+      "label": "Knoplink"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [
+    {
+      "name": "Hero sectie"
+    }
+  ]
+}
+{% endschema %}

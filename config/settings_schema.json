@@ -1,0 +1,258 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Hof van Laren",
+    "theme_version": "1.0.0",
+    "theme_author": "Jesse Hielema",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Kleuren",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Hoofdkleuren"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Achtergrondkleur",
+        "default": "#F5EEE4",
+        "info": "Hoofdachtergrond van de website"
+      },
+      {
+        "type": "color",
+        "id": "color_foreground",
+        "label": "Tekstkleur",
+        "default": "#1C1410",
+        "info": "Kleur van alle teksten"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accentkleur (rood)",
+        "default": "#900020",
+        "info": "Gebruikt voor knoppen, badges en links"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Goudkleur",
+        "default": "#C9A85C",
+        "info": "Gebruikt voor prijzen, labels en accenten"
+      },
+      {
+        "type": "header",
+        "content": "Achtergrond varianten"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_2",
+        "label": "Achtergrond kaarten",
+        "default": "#E9E1D8",
+        "info": "Achtergrond van productkaarten en secties"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Randkleur",
+        "default": "#D8C0A3",
+        "info": "Kleur van randen en lijnen"
+      }
+    ]
+  },
+  {
+    "name": "Typografie",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Lettertypen (standaard voor hele website)"
+      },
+      {
+        "type": "select",
+        "id": "font_heading",
+        "label": "Koppen — lettertype",
+        "options": [
+          { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena (aanbevolen)" },
+          { "value": "'Cormorant Garamond', Georgia, serif", "label": "Cormorant Garamond" },
+          { "value": "'Archivo', sans-serif", "label": "Archivo (sans-serif)" },
+          { "value": "Georgia, serif", "label": "Georgia (fallback)" }
+        ],
+        "default": "'skeena', 'Cormorant Garamond', Georgia, serif"
+      },
+      {
+        "type": "select",
+        "id": "font_heading_weight",
+        "label": "Koppen — dikte",
+        "options": [
+          { "value": "100", "label": "Thin (100)" },
+          { "value": "200", "label": "Extra Light (200)" },
+          { "value": "300", "label": "Light (300)" },
+          { "value": "400", "label": "Regular (400)" },
+          { "value": "500", "label": "Medium (500)" },
+          { "value": "600", "label": "SemiBold (600)" },
+          { "value": "700", "label": "Bold (700)" },
+          { "value": "800", "label": "Extra Bold (800)" }
+        ],
+        "default": "400"
+      },
+      {
+        "type": "select",
+        "id": "font_heading_style",
+        "label": "Koppen — stijl",
+        "options": [
+          { "value": "normal", "label": "Normaal" },
+          { "value": "italic", "label": "Cursief (italic)" }
+        ],
+        "default": "italic"
+      },
+      {
+        "type": "select",
+        "id": "font_body",
+        "label": "Tekst — lettertype",
+        "options": [
+          { "value": "'Archivo', sans-serif", "label": "Archivo (aanbevolen)" },
+          { "value": "Skeena, 'Cormorant Garamond', Georgia, serif", "label": "Skeena (serif)" },
+          { "value": "'Helvetica Neue', Arial, sans-serif", "label": "Helvetica Neue" }
+        ],
+        "default": "'Archivo', sans-serif"
+      },
+      {
+        "type": "select",
+        "id": "font_body_weight",
+        "label": "Tekst — dikte",
+        "options": [
+          { "value": "100", "label": "Thin (100)" },
+          { "value": "200", "label": "Extra Light (200)" },
+          { "value": "300", "label": "Light (300)" },
+          { "value": "400", "label": "Regular (400)" },
+          { "value": "500", "label": "Medium (500)" },
+          { "value": "600", "label": "SemiBold (600)" },
+          { "value": "700", "label": "Bold (700)" }
+        ],
+        "default": "300"
+      },
+      {
+        "type": "header",
+        "content": "Per sectie aanpassen"
+      },
+      {
+        "type": "paragraph",
+        "content": "Klik op een sectie in de editor om het lettertype, de dikte, stijl en kleur van die specifieke sectie aan te passen."
+      }
+    ]
+  },
+  {
+    "name": "Kleurschema's",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Kleurschema kiezen"
+      },
+      {
+        "type": "paragraph",
+        "content": "Kies een kant-en-klaar schema om de hele website in één klik een nieuw uiterlijk te geven. Alle kleuren worden automatisch aangepast."
+      },
+      {
+        "type": "select",
+        "id": "season",
+        "label": "Actief schema",
+        "info": "Overschrijft alle kleuren hieronder. Zet op 'Eigen kleuren' om handmatig aan te passen.",
+        "options": [
+          { "value": "none",       "label": "— Eigen kleuren (zie Kleuren)" },
+          { "value": "standaard",  "label": "Hof van Laren — Standaard" },
+          { "value": "valentijn",  "label": "Valentijnsdag" },
+          { "value": "pasen",      "label": "Pasen & Lente" },
+          { "value": "moederdag",  "label": "Moederdag" },
+          { "value": "zomer",      "label": "Zomer" },
+          { "value": "herfst",     "label": "Herfst" },
+          { "value": "kerst",      "label": "Kerst" },
+          { "value": "rouw",       "label": "Rouw & Aandacht" }
+        ],
+        "default": "standaard"
+      },
+      {
+        "type": "header",
+        "content": "Seizoensbanner"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_season_banner",
+        "label": "Seizoensbanner tonen",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "season_banner_text",
+        "label": "Bannertekst",
+        "default": "🎄 Kerst collectie is binnen — kom langs of bestel online"
+      },
+      {
+        "type": "color",
+        "id": "season_banner_bg",
+        "label": "Bannerachtergrond",
+        "default": "#1C3D2A"
+      },
+      {
+        "type": "color",
+        "id": "season_banner_text_color",
+        "label": "Bannertekstkleur",
+        "default": "#F5EEE4"
+      }
+    ]
+  },
+  {
+    "name": "Winkelinformatie",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Contactgegevens"
+      },
+      {
+        "type": "text",
+        "id": "store_phone",
+        "label": "Telefoonnummer",
+        "default": "06-40356687"
+      },
+      {
+        "type": "text",
+        "id": "store_address",
+        "label": "Adres",
+        "default": "Stationsweg 2, 9471 GR Zuidlaren"
+      },
+      {
+        "type": "textarea",
+        "id": "store_hours",
+        "label": "Openingstijden",
+        "default": "Wo – vr: 09:00 – 18:00\nZaterdag: 09:00 – 17:00"
+      },
+      {
+        "type": "text",
+        "id": "store_instagram",
+        "label": "Instagram handle",
+        "default": "@hofvanlaren"
+      },
+      {
+        "type": "url",
+        "id": "store_instagram_url",
+        "label": "Instagram URL"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "min_page_margin",
+        "min": 12,
+        "max": 48,
+        "step": 4,
+        "unit": "px",
+        "label": "Paginamarges",
+        "default": 20
+      }
+    ]
+  }
+]

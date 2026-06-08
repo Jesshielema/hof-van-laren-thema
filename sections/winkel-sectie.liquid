@@ -1,0 +1,374 @@
+{%- render 'section-typo' -%}
+<section class="winkel full-width" id="winkel"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="winkel__inner">
+
+    <div class="winkel__info">
+      <span class="winkel__label">{{ section.settings.label | default: 'Bezoek de winkel' | escape }}</span>
+      <h2 class="winkel__heading">{{ section.settings.heading | default: 'Kom langs in Zuidlaren' | escape }}</h2>
+      <div class="winkel__rule" aria-hidden="true"></div>
+
+      {% if section.settings.description != blank %}
+        <p class="winkel__desc">{{ section.settings.description }}</p>
+      {% endif %}
+
+      <dl class="winkel__details">
+        <div class="winkel__detail">
+          <dt>Adres</dt>
+          <dd>Stationsweg 2<br>9471 GR Zuidlaren</dd>
+        </div>
+        <div class="winkel__detail">
+          <dt>Openingstijden</dt>
+          <dd>{{ section.settings.hours | default: 'Wo – vr: 09:00 – 18:00\nZaterdag: 09:00 – 17:00' | newline_to_br }}</dd>
+        </div>
+        <div class="winkel__detail">
+          <dt>Telefoon</dt>
+          <dd>
+            <a href="tel:{{ section.settings.phone | default: '0640356687' | remove: '-' | remove: ' ' }}" class="winkel__phone">
+              {{ section.settings.phone | default: '06-40356687' }}
+            </a>
+          </dd>
+        </div>
+      </dl>
+
+      <div class="winkel__ctas">
+        <a
+          href="https://maps.google.com/?q=Stationsweg+2+Zuidlaren"
+          target="_blank"
+          rel="noopener"
+          class="winkel__cta winkel__cta--primary"
+        >Route plannen →</a>
+        {% if section.settings.show_appointment %}
+          <a href="{{ section.settings.appointment_url | default: '#contact' }}" class="winkel__cta winkel__cta--outline">
+            Adviesgesprek boeken
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="winkel__media">
+      {% if section.settings.image != blank %}
+        <div class="winkel__frame winkel__frame--groot">
+          <img
+            src="{{ section.settings.image | image_url: width: 800 }}"
+            alt="{{ shop.name }} winkel"
+            width="800"
+            loading="lazy"
+            class="winkel__img"
+          >
+        </div>
+      {% else %}
+        <div class="winkel__frame winkel__frame--groot winkel__frame--leeg">
+          <span>Voeg een winkelfoto toe via de editor</span>
+        </div>
+      {% endif %}
+
+      {% if section.settings.image_2 != blank %}
+        <div class="winkel__frame winkel__frame--klein">
+          <img
+            src="{{ section.settings.image_2 | image_url: width: 400 }}"
+            alt="{{ shop.name }} sfeer"
+            width="400"
+            loading="lazy"
+            class="winkel__img"
+          >
+        </div>
+      {% endif %}
+
+      {% if section.settings.image_3 != blank %}
+        <div class="winkel__frame winkel__frame--klein">
+          <img
+            src="{{ section.settings.image_3 | image_url: width: 400 }}"
+            alt="{{ shop.name }} sfeer"
+            width="400"
+            loading="lazy"
+            class="winkel__img"
+          >
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .winkel {
+    background-color: var(--color-bg-2);
+    padding: 5rem 0;
+  }
+
+  .winkel__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  /* Info kolom */
+  .winkel__label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .winkel__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-foreground);
+    margin: 0 0 1.25rem;
+    line-height: 1.15;
+  }
+
+  .winkel__rule {
+    width: 40px;
+    height: 1px;
+    background-color: var(--color-gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .winkel__desc {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-muted);
+    margin: 0 0 2rem;
+    max-width: 440px;
+  }
+
+  /* Details */
+  .winkel__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 0 0 2rem;
+  }
+
+  .winkel__detail {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .winkel__detail dt {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    padding-top: 2px;
+  }
+
+  .winkel__detail dd {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .winkel__phone {
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .winkel__phone:hover {
+    color: var(--color-gold);
+  }
+
+  /* Knoppen */
+  .winkel__ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .winkel__cta {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .winkel__cta--primary {
+    background-color: var(--color-gold);
+    color: var(--color-background);
+  }
+
+  .winkel__cta--primary:hover {
+    background-color: var(--color-gold-light);
+  }
+
+  .winkel__cta--outline {
+    background-color: transparent;
+    color: var(--color-foreground);
+    border: 1.5px solid rgba(28,20,16,0.22);
+  }
+
+  .winkel__cta--outline:hover {
+    border-color: rgba(28,20,16,0.45);
+    background-color: rgba(28,20,16,0.04);
+  }
+
+  /* Foto grid */
+  .winkel__media {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .winkel__frame {
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+  }
+
+  .winkel__frame--groot {
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
+  }
+
+  .winkel__frame--klein {
+    aspect-ratio: 1;
+  }
+
+  .winkel__frame--leeg {
+    background-color: var(--color-bg-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .winkel__frame--leeg span {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    text-align: center;
+    font-weight: 300;
+  }
+
+  .winkel__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+  }
+
+  .winkel__frame:hover .winkel__img {
+    transform: scale(1.03);
+  }
+
+  @media (max-width: 900px) {
+    .winkel__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .winkel__media {
+      order: -1;
+    }
+
+    .winkel {
+      padding: 3.5rem 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .winkel__detail {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Bezoek de winkel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Bezoek de winkel"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titel",
+      "default": "Kom langs in Zuidlaren"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Omschrijving",
+      "default": "Wil je de collectie live zien, advies van Marchien of een pot in het echt aanraken? Kom gerust langs in de winkel aan de Stationsweg in Zuidlaren. We staan voor je klaar."
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Telefoonnummer",
+      "default": "06-40356687"
+    },
+    {
+      "type": "textarea",
+      "id": "hours",
+      "label": "Openingstijden",
+      "default": "Wo – vr: 09:00 – 18:00\nZaterdag: 09:00 – 17:00"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Winkelfoto (groot)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Sfeerfoto 2 (klein)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Sfeerfoto 3 (klein)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_appointment",
+      "label": "Adviesgesprek-knop tonen",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "appointment_url",
+      "label": "Link adviesgesprek"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [
+    {
+      "name": "Bezoek de winkel"
+    }
+  ]
+}
+{% endschema %}

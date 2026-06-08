@@ -1,0 +1,267 @@
+{%- render 'section-typo' -%}
+<section class="gel-section"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="gel-inner">
+
+    <nav class="gel-nav" aria-label="Gelegenheden">
+      {% for i in (1..6) %}
+        {% liquid
+          assign text_key = 'occasion_' | append: i | append: '_text'
+          assign url_key  = 'occasion_' | append: i | append: '_url'
+          assign text_val = section.settings[text_key]
+          assign url_val  = section.settings[url_key] | default: '/collections/all'
+        %}
+        {% if text_val != blank %}
+          {% unless forloop.first %}<span class="gel-nav__dot" aria-hidden="true">·</span>{% endunless %}
+          <a href="{{ url_val }}" class="gel-nav__link">{{ text_val | escape }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+
+    <div class="gel-images">
+      {% for i in (1..3) %}
+        {% liquid
+          assign img_key = 'collection_image_' | append: i
+          assign url_key = 'collection_url_' | append: i
+          assign img_val = section.settings[img_key]
+          assign url_val = section.settings[url_key] | default: '/collections/all'
+        %}
+        <a href="{{ url_val }}" class="gel-images__link">
+          {% if img_val != blank %}
+            <img
+              src="{{ img_val | image_url: width: 600 }}"
+              alt="{{ img_val.alt | escape }}"
+              width="600"
+              height="480"
+              loading="lazy"
+              class="gel-images__img"
+            >
+          {% else %}
+            {{ 'collection-' | append: i | placeholder_svg_tag: 'gel-images__img gel-images__img--placeholder' }}
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .gel-section {
+    background-color: var(--color-background);
+    padding: 2.5rem 0 3rem;
+  }
+
+  .gel-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Gelegenheden-balk */
+  .gel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.1rem;
+  }
+
+  .gel-nav__link {
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.5rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  .gel-nav__link:hover {
+    opacity: 1;
+  }
+
+  .gel-nav__dot {
+    color: var(--color-foreground);
+    opacity: 0.35;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0 0.15rem;
+  }
+
+  /* Drie foto's */
+  .gel-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .gel-images__link {
+    display: block;
+    overflow: hidden;
+    border-radius: 3px;
+    text-decoration: none;
+  }
+
+  .gel-images__img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    border-radius: 3px;
+    transition: transform 0.45s ease;
+  }
+
+  .gel-images__link:hover .gel-images__img {
+    transform: scale(1.04);
+  }
+
+  .gel-images__img--placeholder {
+    background-color: rgba(255,255,255,0.15);
+    height: 420px;
+  }
+
+  @media (max-width: 900px) {
+    .gel-images {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .gel-images__img,
+    .gel-images__img--placeholder {
+      height: 260px;
+    }
+
+    .gel-nav__link {
+      font-size: 0.95rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Gelegenheden",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Gelegenheden"
+    },
+    {
+      "type": "text",
+      "id": "occasion_1_text",
+      "label": "Gelegenheid 1",
+      "default": "Verjaardag"
+    },
+    {
+      "type": "url",
+      "id": "occasion_1_url",
+      "label": "Link 1"
+    },
+    {
+      "type": "text",
+      "id": "occasion_2_text",
+      "label": "Gelegenheid 2",
+      "default": "Liefde"
+    },
+    {
+      "type": "url",
+      "id": "occasion_2_url",
+      "label": "Link 2"
+    },
+    {
+      "type": "text",
+      "id": "occasion_3_text",
+      "label": "Gelegenheid 3",
+      "default": "Trouwdag"
+    },
+    {
+      "type": "url",
+      "id": "occasion_3_url",
+      "label": "Link 3"
+    },
+    {
+      "type": "text",
+      "id": "occasion_4_text",
+      "label": "Gelegenheid 4",
+      "default": "Felicitatie"
+    },
+    {
+      "type": "url",
+      "id": "occasion_4_url",
+      "label": "Link 4"
+    },
+    {
+      "type": "text",
+      "id": "occasion_5_text",
+      "label": "Gelegenheid 5",
+      "default": "Rouw"
+    },
+    {
+      "type": "url",
+      "id": "occasion_5_url",
+      "label": "Link 5"
+    },
+    {
+      "type": "text",
+      "id": "occasion_6_text",
+      "label": "Gelegenheid 6",
+      "default": "Zijdebloemen"
+    },
+    {
+      "type": "url",
+      "id": "occasion_6_url",
+      "label": "Link 6"
+    },
+    {
+      "type": "header",
+      "content": "Foto's"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_image_1",
+      "label": "Foto 1"
+    },
+    {
+      "type": "url",
+      "id": "collection_url_1",
+      "label": "Link foto 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_image_2",
+      "label": "Foto 2"
+    },
+    {
+      "type": "url",
+      "id": "collection_url_2",
+      "label": "Link foto 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_image_3",
+      "label": "Foto 3"
+    },
+    {
+      "type": "url",
+      "id": "collection_url_3",
+      "label": "Link foto 3"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [
+    {
+      "name": "Gelegenheden"
+    }
+  ]
+}
+{% endschema %}

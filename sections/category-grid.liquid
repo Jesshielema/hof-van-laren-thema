@@ -1,0 +1,347 @@
+{% comment %} Categorie-blokken sectie — grote visuele links naar collecties {% endcomment %}
+
+<div class="cat-grid">
+  <div class="container">
+    <div class="cat-grid__header">
+      <span class="sec-label">{{ section.settings.label | default: 'Collecties' }}</span>
+      <h2 class="sec-title">{{ section.settings.heading | default: 'Ontdek de collectie' }}</h2>
+    </div>
+
+    <div class="cat-grid__items">
+      {% for i in (1..6) %}
+        {% assign title_key = 'cat_' | append: i | append: '_title' %}
+        {% assign url_key   = 'cat_' | append: i | append: '_url' %}
+        {% assign img_key   = 'cat_' | append: i | append: '_image' %}
+        {% assign tag_key   = 'cat_' | append: i | append: '_tag' %}
+
+        {% assign cat_title = section.settings[title_key] %}
+        {% assign cat_url   = section.settings[url_key]   %}
+        {% assign cat_img   = section.settings[img_key]   %}
+        {% assign cat_tag   = section.settings[tag_key]   %}
+
+        {% if cat_title != blank %}
+          <a href="{{ cat_url | default: '/collections/all' }}" class="cat-card{% if forloop.first %} cat-card--featured{% endif %}">
+            {% if cat_img != blank %}
+              <img
+                src="{{ cat_img | image_url: width: 800 }}"
+                alt="{{ cat_title }}"
+                class="cat-card__img"
+                loading="lazy"
+                width="800"
+                height="600"
+              >
+            {% else %}
+              <div class="cat-card__placeholder"></div>
+            {% endif %}
+            <div class="cat-card__overlay">
+              {% if cat_tag != blank %}
+                <span class="cat-card__tag">{{ cat_tag }}</span>
+              {% endif %}
+              <h3 class="cat-card__title">{{ cat_title }}</h3>
+              <span class="cat-card__arrow">Bekijk →</span>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .cat-grid {
+    padding: 56px 0;
+  }
+
+  .cat-grid__header {
+    margin-bottom: 32px;
+  }
+
+  .cat-grid__items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+
+  /* Eerste kaart: groot, neemt 2 rijen in */
+  .cat-card--featured {
+    grid-row: span 2;
+  }
+
+  .cat-card {
+    position: relative;
+    display: block;
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    background: var(--color-bg-2);
+    min-height: 220px;
+    cursor: pointer;
+  }
+
+  .cat-card--featured {
+    min-height: 460px;
+  }
+
+  .cat-card__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .cat-card:hover .cat-card__img {
+    transform: scale(1.04);
+  }
+
+  .cat-card__placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-bg-2), var(--color-bg-3));
+  }
+
+  .cat-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,20,16,0.85) 0%, rgba(28,20,16,0.1) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    gap: 6px;
+  }
+
+  .cat-card__tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+  }
+
+  .cat-card__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-foreground);
+    line-height: 1.2;
+  }
+
+  .cat-card__arrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(245,238,228,0.6);
+    transition: color var(--transition);
+  }
+
+  .cat-card:hover .cat-card__arrow {
+    color: var(--color-gold);
+  }
+
+  @media (max-width: 768px) {
+    .cat-grid__items {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .cat-card--featured {
+      grid-column: span 2;
+      grid-row: span 1;
+      min-height: 200px;
+    }
+
+    .cat-card {
+      min-height: 160px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cat-grid__items {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .cat-card--featured {
+      grid-column: span 1;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Categorie-grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Collecties"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titel",
+      "default": "Ontdek de collectie"
+    },
+    {
+      "type": "header",
+      "content": "Categorie 1 (groot, links)"
+    },
+    {
+      "type": "image_picker",
+      "id": "cat_1_image",
+      "label": "Afbeelding"
+    },
+    {
+      "type": "text",
+      "id": "cat_1_title",
+      "label": "Naam",
+      "default": "Vazen"
+    },
+    {
+      "type": "text",
+      "id": "cat_1_tag",
+      "label": "Tag",
+      "default": "Nieuw binnen"
+    },
+    {
+      "type": "url",
+      "id": "cat_1_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Categorie 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "cat_2_image",
+      "label": "Afbeelding"
+    },
+    {
+      "type": "text",
+      "id": "cat_2_title",
+      "label": "Naam",
+      "default": "Sierpotten"
+    },
+    {
+      "type": "text",
+      "id": "cat_2_tag",
+      "label": "Tag"
+    },
+    {
+      "type": "url",
+      "id": "cat_2_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Categorie 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "cat_3_image",
+      "label": "Afbeelding"
+    },
+    {
+      "type": "text",
+      "id": "cat_3_title",
+      "label": "Naam",
+      "default": "Zijdebloemen"
+    },
+    {
+      "type": "text",
+      "id": "cat_3_tag",
+      "label": "Tag"
+    },
+    {
+      "type": "url",
+      "id": "cat_3_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Categorie 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "cat_4_image",
+      "label": "Afbeelding"
+    },
+    {
+      "type": "text",
+      "id": "cat_4_title",
+      "label": "Naam",
+      "default": "Takken & decoratie"
+    },
+    {
+      "type": "text",
+      "id": "cat_4_tag",
+      "label": "Tag"
+    },
+    {
+      "type": "url",
+      "id": "cat_4_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Categorie 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "cat_5_image",
+      "label": "Afbeelding"
+    },
+    {
+      "type": "text",
+      "id": "cat_5_title",
+      "label": "Naam",
+      "default": "Cadeaus"
+    },
+    {
+      "type": "text",
+      "id": "cat_5_tag",
+      "label": "Tag"
+    },
+    {
+      "type": "url",
+      "id": "cat_5_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Categorie 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "cat_6_image",
+      "label": "Afbeelding"
+    },
+    {
+      "type": "text",
+      "id": "cat_6_title",
+      "label": "Naam",
+      "default": "Nieuw binnen"
+    },
+    {
+      "type": "text",
+      "id": "cat_6_tag",
+      "label": "Tag"
+    },
+    {
+      "type": "url",
+      "id": "cat_6_url",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categorie-grid"
+    }
+  ]
+}
+{% endschema %}

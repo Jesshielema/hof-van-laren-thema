@@ -1,0 +1,200 @@
+{%- render 'section-typo' -%}
+<section class="marchien-quote full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  {% if section.settings.background_image != blank %}
+    <div class="marchien-quote__bg" aria-hidden="true">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 1440 }}"
+        alt=""
+        width="1440"
+        loading="lazy"
+        class="marchien-quote__bg-img"
+      >
+    </div>
+  {% endif %}
+  <div class="marchien-quote__inner">
+    <div class="marchien-quote__content">
+      <blockquote class="marchien-quote__text">
+        {{ section.settings.quote | default: '"Ik vind het allermooiste aan boeketten maken: het stukje personaliseren, goed luisteren naar wat de vraag is en dat verwerken tot een prachtig eindresultaat."' }}
+      </blockquote>
+      <p class="marchien-quote__attribution">{{ section.settings.attribution | default: '- Marchien' | escape }}</p>
+      {% if section.settings.link_url != blank %}
+        <a href="{{ section.settings.link_url }}" class="marchien-quote__link">
+          {{ section.settings.link_text | default: 'Lees verder' | escape }} →
+        </a>
+      {% endif %}
+    </div>
+
+    {% if section.settings.image != blank %}
+      <div class="marchien-quote__image-wrap">
+        <img
+          src="{{ section.settings.image | image_url: width: 300 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.attribution | escape }}"
+          width="259"
+          loading="lazy"
+          class="marchien-quote__image"
+        >
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .marchien-quote {
+    background-color: var(--color-gold);
+    color: var(--color-background);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .marchien-quote__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .marchien-quote__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.15;
+    mix-blend-mode: multiply;
+  }
+
+  .marchien-quote__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    min-height: 272px;
+  }
+
+  .marchien-quote__content {
+    flex: 1;
+    max-width: 640px;
+  }
+
+  .marchien-quote__text {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin: 0 0 1.25rem;
+    font-style: normal;
+  }
+
+  .marchien-quote__attribution {
+    font-family: 'Skeena', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+    font-style: italic;
+  }
+
+  .marchien-quote__link {
+    display: inline-block;
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 300;
+    border: 1px solid var(--color-background);
+    border-radius: 5px;
+    padding: 0.4rem 0.85rem;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .marchien-quote__link:hover {
+    background-color: var(--color-background);
+    color: var(--color-gold);
+  }
+
+  .marchien-quote__image-wrap {
+    flex-shrink: 0;
+    width: 259px;
+    height: 273px;
+    overflow: hidden;
+  }
+
+  .marchien-quote__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .marchien-quote__inner {
+      flex-direction: column;
+      padding: 2.5rem 1.5rem;
+      min-height: 0;
+    }
+
+    .marchien-quote__image-wrap {
+      width: 100%;
+      height: 220px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Citaat – Marchien",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Citaat",
+      "default": "<p>\"Ik vind het allermooiste aan boeketten maken: het stukje <strong>personaliseren</strong>, <strong>goed luisteren</strong> naar wat de vraag is en dat verwerken tot een <strong>prachtig eindresultaat</strong>.\"</p>"
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Naam / bronvermelding",
+      "default": "— Marchien, eigenaar Hof van Laren"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Linktekst",
+      "default": "Leer Marchien kennen"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Foto van Marchien"
+    },
+    {
+      "type": "header",
+      "content": "Achtergrond"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Achtergrondafbeelding (subtiel, over de goudkleur)"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [
+    {
+      "name": "Citaat – Marchien"
+    }
+  ]
+}
+{% endschema %}

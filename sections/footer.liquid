@@ -1,0 +1,404 @@
+<footer class="site-footer full-width">
+
+  <div class="footer__main">
+    <div class="footer__inner">
+
+      <!-- Merk kolom -->
+      <div class="footer__brand">
+        {% if section.settings.logo != blank %}
+          <img
+            src="{{ section.settings.logo | image_url: width: 160 }}"
+            alt="{{ shop.name }}"
+            width="160"
+            loading="lazy"
+            class="footer__logo-img"
+          >
+        {% else %}
+          <span class="footer__logo-text">{{ shop.name }}</span>
+        {% endif %}
+        <div class="footer__rule" aria-hidden="true"></div>
+        {% if section.settings.tagline != blank %}
+          <p class="footer__tagline">{{ section.settings.tagline }}</p>
+        {% else %}
+          <p class="footer__tagline">Jouw inspiratiebron voor verse &amp; zijdebloemen.<br>Kleur en sfeer voor ieder interieur.</p>
+        {% endif %}
+        {% if section.settings.instagram_url != blank %}
+          <a href="{{ section.settings.instagram_url }}" class="footer__social" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+            </svg>
+            {{ section.settings.instagram_handle | default: '@hofvanlaren' }}
+          </a>
+        {% endif %}
+      </div>
+
+      <!-- Navigatie kolom -->
+      <div class="footer__col">
+        <h4 class="footer__heading">Navigatie</h4>
+        <nav class="footer__nav">
+          {% if section.settings.menu.links.size > 0 %}
+            {% for link in section.settings.menu.links %}
+              <a href="{{ link.url }}" class="footer__nav-link">{{ link.title | escape }}</a>
+            {% endfor %}
+          {% else %}
+            <a href="/collections/nieuw-binnen" class="footer__nav-link">Nieuw binnen</a>
+            <a href="/collections" class="footer__nav-link">Collectie</a>
+            <a href="/pages/boeketten-bestellen" class="footer__nav-link">Boeketten bestellen</a>
+            <a href="/blogs/inspiratie" class="footer__nav-link">Inspiratie</a>
+            <a href="/pages/over-hof-van-laren" class="footer__nav-link">Over Hof van Laren</a>
+            <a href="/pages/bezoek-de-winkel" class="footer__nav-link">Bezoek de winkel</a>
+          {% endif %}
+        </nav>
+      </div>
+
+      <!-- Contact kolom -->
+      <div class="footer__col">
+        <h4 class="footer__heading">Contact</h4>
+        <address class="footer__address">
+          <p>{{ section.settings.address | default: 'Stationsweg 2<br>9471 GR Zuidlaren' }}</p>
+          <a href="tel:{{ section.settings.phone | default: '0640356687' | remove: '-' | remove: ' ' }}" class="footer__phone">
+            {{ section.settings.phone | default: '06-40356687' }}
+          </a>
+          {% if section.settings.email != blank %}
+            <a href="mailto:{{ section.settings.email }}" class="footer__email">{{ section.settings.email }}</a>
+          {% endif %}
+        </address>
+      </div>
+
+      <!-- Openingstijden kolom -->
+      <div class="footer__col">
+        <h4 class="footer__heading">Openingstijden</h4>
+        <div class="footer__hours">
+          {% if section.settings.hours != blank %}
+            {{ section.settings.hours | newline_to_br }}
+          {% else %}
+            <span>Wo – vr: 09:00 – 18:00</span><br>
+            <span>Zaterdag: 09:00 – 17:00</span>
+          {% endif %}
+        </div>
+        <a
+          href="https://maps.google.com/?q=Stationsweg+2+Zuidlaren"
+          target="_blank"
+          rel="noopener"
+          class="footer__map-link"
+        >Route plannen →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="footer__bottom-inner">
+      <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+      <div class="footer__payment">
+        {% if section.settings.show_payment_icons %}
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag }}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+{% stylesheet %}
+  .site-footer {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  /* Hoofdgedeelte */
+  .footer__main {
+    border-bottom: 1px solid rgba(245,238,228,0.12);
+  }
+
+  .footer__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  /* Merk kolom */
+  .footer__logo-img {
+    display: block;
+    max-width: 140px;
+    height: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    margin-bottom: 1.25rem;
+  }
+
+  .footer__logo-text {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--color-background);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.01em;
+  }
+
+  .footer__rule {
+    width: 40px;
+    height: 1px;
+    background-color: var(--color-gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer__tagline {
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(245,238,228,0.65);
+    margin: 0 0 1.5rem;
+    max-width: 260px;
+  }
+
+  .footer__social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(245,238,228,0.6);
+    text-decoration: none;
+    font-size: 0.825rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .footer__social:hover {
+    color: var(--color-gold);
+  }
+
+  /* Kolommen */
+  .footer__heading {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin: 0 0 1.25rem;
+  }
+
+  /* Navigatie */
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer__nav-link {
+    color: rgba(245,238,228,0.7);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 300;
+    transition: color 0.2s;
+    line-height: 1.4;
+  }
+
+  .footer__nav-link:hover {
+    color: var(--color-background);
+  }
+
+  /* Adres */
+  .footer__address {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer__address p {
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(245,238,228,0.7);
+    margin: 0;
+  }
+
+  .footer__phone,
+  .footer__email {
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .footer__phone:hover,
+  .footer__email:hover {
+    color: var(--color-gold);
+  }
+
+  /* Openingstijden */
+  .footer__hours {
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(245,238,228,0.7);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer__map-link {
+    display: inline-block;
+    color: var(--color-gold);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+  }
+
+  .footer__map-link:hover {
+    opacity: 0.75;
+  }
+
+  /* Onderste balk */
+  .footer__bottom {
+    background-color: rgba(0,0,0,0.2);
+  }
+
+  .footer__bottom-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer__copyright {
+    font-size: 0.75rem;
+    color: rgba(245,238,228,0.4);
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .footer__payment {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .footer__payment svg {
+    height: 1.4rem;
+    width: auto;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 900px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      padding: 3.5rem 1.5rem 3rem;
+    }
+
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+
+    .footer__tagline {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .footer__bottom-inner {
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (wit wordt automatisch)"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Jouw inspiratiebron voor verse & zijdebloemen. Kleur en sfeer voor ieder interieur."
+    },
+    {
+      "type": "header",
+      "content": "Contact"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Adres",
+      "default": "Stationsweg 2\n9471 GR Zuidlaren"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Telefoonnummer",
+      "default": "06-40356687"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "E-mailadres"
+    },
+    {
+      "type": "textarea",
+      "id": "hours",
+      "label": "Openingstijden",
+      "default": "Wo – vr: 09:00 – 18:00\nZaterdag: 09:00 – 17:00"
+    },
+    {
+      "type": "header",
+      "content": "Social"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "@hofvanlaren"
+    },
+    {
+      "type": "header",
+      "content": "Navigatie"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footermenu"
+    },
+    {
+      "type": "header",
+      "content": "Overig"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Betaalmethoden tonen",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

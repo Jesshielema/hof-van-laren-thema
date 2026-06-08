@@ -1,0 +1,285 @@
+{%- render 'section-typo' -%}
+<section class="mv-sectie full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="mv-inner">
+
+    <div class="mv-image-wrap">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 700 }}"
+          alt="{{ section.settings.image.alt | default: 'Marchien' | escape }}"
+          width="700"
+          loading="lazy"
+          class="mv-image"
+        >
+      {% else %}
+        <div class="mv-image-placeholder"></div>
+      {% endif %}
+    </div>
+
+    <div class="mv-content">
+      {% if section.settings.label != blank %}
+        <span class="mv-label">{{ section.settings.label | escape }}</span>
+      {% endif %}
+      <div class="mv-rule" aria-hidden="true"></div>
+      <h2 class="mv-title">{{ section.settings.title | default: 'Waarom vertrouwen op Marchien?' }}</h2>
+      {% if section.settings.body != blank %}
+        <div class="mv-body">{{ section.settings.body }}</div>
+      {% endif %}
+
+      <ul class="mv-usps">
+        {% for i in (1..4) %}
+          {% assign usp_key = 'usp_' | append: i %}
+          {% assign usp_val = section.settings[usp_key] %}
+          {% if usp_val != blank %}
+            <li class="mv-usp">
+              <span class="mv-usp__streep" aria-hidden="true"></span>
+              {{ usp_val | escape }}
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% if section.settings.cta_url != blank %}
+        <a href="{{ section.settings.cta_url }}" class="mv-cta">
+          {{ section.settings.cta_text | default: 'Bestel jouw boeket' | escape }} →
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .mv-sectie {
+    background-color: var(--color-background);
+    padding: 5rem 0;
+  }
+
+  .mv-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .mv-image-wrap {
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+  }
+
+  .mv-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .mv-image-wrap:hover .mv-image {
+    transform: scale(1.03);
+  }
+
+  .mv-image-placeholder {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: var(--color-bg-2);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mv-placeholder-svg {
+    width: 80px;
+    opacity: 0.2;
+  }
+
+  /* Content kant */
+  .mv-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .mv-rule {
+    width: 40px;
+    height: 1px;
+    background-color: var(--color-gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .mv-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-foreground);
+    margin: 0 0 1.5rem;
+    line-height: 1.15;
+  }
+
+  .mv-body {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  .mv-body p { margin: 0 0 1rem; }
+  .mv-body p:last-child { margin-bottom: 0; }
+  .mv-body strong {
+    font-weight: 600;
+    color: var(--color-foreground);
+  }
+
+  /* USP lijst */
+  .mv-usps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mv-usp {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.925rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+  }
+
+  .mv-usp__streep {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .mv-cta {
+    display: inline-block;
+    background-color: var(--color-gold);
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.85rem 1.75rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  .mv-cta:hover {
+    background-color: var(--color-gold-light);
+  }
+
+  @media (max-width: 900px) {
+    .mv-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .mv-image-wrap {
+      aspect-ratio: 4 / 3;
+    }
+
+    .mv-sectie {
+      padding: 3.5rem 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Marchien – Vertrouwen",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Foto van Marchien"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Klein label",
+      "default": "Over Marchien"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Ieder boeket begint met aandacht"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Verhaal",
+      "default": "<p>Marchien werkt al jarenlang met bloemen en weet als geen ander hoe kleur, vorm en geur een gevoel kunnen oproepen. Daarom werken we niet met standaard boeketten van een foto, maar met unieke creaties die speciaal worden samengesteld voor jouw moment.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Kernpunten"
+    },
+    {
+      "type": "text",
+      "id": "usp_1",
+      "label": "Punt 1",
+      "default": "Meer dan 20 jaar ervaring met bloemen"
+    },
+    {
+      "type": "text",
+      "id": "usp_2",
+      "label": "Punt 2",
+      "default": "Elk boeket persoonlijk samengesteld"
+    },
+    {
+      "type": "text",
+      "id": "usp_3",
+      "label": "Punt 3",
+      "default": "Altijd bloemen van het seizoen"
+    },
+    {
+      "type": "text",
+      "id": "usp_4",
+      "label": "Punt 4",
+      "default": "Afhalen in Zuidlaren of ophalen in de winkel"
+    },
+    {
+      "type": "header",
+      "content": "Knop"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knoptekst",
+      "default": "Bestel jouw boeket"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knoplink"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [{ "name": "Marchien – Vertrouwen" }]
+}
+{% endschema %}

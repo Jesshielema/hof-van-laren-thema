@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"c:\\\\Users\\\\jesse\\\\hofvanlarenfinal.zip\")",
+      "Read(//c/Users/jesse/**)",
+      "Bash(git --version)",
+      "Bash(gh --version)",
+      "PowerShell(& \"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" auth status 2>&1)",
+      "PowerShell(& \"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" auth login --web --git-protocol https 2>&1)"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "beleid": {
+      "type": "beleid",
+      "settings": {}
+    }
+  },
+  "order": ["beleid"]
+}

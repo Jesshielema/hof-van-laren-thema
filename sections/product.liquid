@@ -1,0 +1,765 @@
+{% comment %} Productpagina — luxe layout met galerij, info, pickup & verzending {% endcomment %}
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<div class="prod-page">
+  <div class="container">
+
+    {% comment %} Breadcrumb {% endcomment %}
+    <nav class="prod-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span> / </span>
+      {% if collection %}
+        <a href="{{ collection.url }}">{{ collection.title }}</a>
+        <span> / </span>
+      {% endif %}
+      <span>{{ product.title }}</span>
+    </nav>
+
+    <div class="prod-layout">
+
+      {% comment %} === LINKER KOLOM: GALERIJ === {% endcomment %}
+      <div class="prod-gallery">
+        <div class="prod-gallery__main" id="gallery-main">
+          {% if product.images.size > 0 %}
+            <img
+              src="{{ product.featured_image | image_url: width: 900 }}"
+              alt="{{ product.featured_image.alt | escape | default: product.title }}"
+              width="900"
+              height="900"
+              id="gallery-main-img"
+              class="prod-gallery__main-img"
+              loading="eager"
+            >
+          {% else %}
+            <div class="prod-gallery__no-img">
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
+              </svg>
+            </div>
+          {% endif %}
+        </div>
+
+        {% if product.images.size > 1 %}
+          <div class="prod-gallery__thumbs scroll-hide">
+            {% for image in product.images %}
+              <button
+                class="prod-gallery__thumb {% if forloop.first %}prod-gallery__thumb--active{% endif %}"
+                data-src="{{ image | image_url: width: 900 }}"
+                data-alt="{{ image.alt | escape | default: product.title }}"
+                aria-label="Foto {{ forloop.index }}"
+                type="button"
+              >
+                <img
+                  src="{{ image | image_url: width: 120 }}"
+                  alt="{{ image.alt | escape | default: product.title }}"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                >
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% comment %} === RECHTER KOLOM: INFO & FORMULIER === {% endcomment %}
+      <div class="prod-info">
+
+        {% comment %} Vendor / merk {% endcomment %}
+        {% if product.vendor != blank %}
+          <span class="prod-vendor">{{ product.vendor }}</span>
+        {% endif %}
+
+        {% comment %} Titel {% endcomment %}
+        <h1 class="prod-title">{{ product.title }}</h1>
+
+        {% comment %} Prijs {% endcomment %}
+        <div class="prod-price-block" id="prod-price">
+          {% if current_variant.compare_at_price > current_variant.price %}
+            <span class="prod-price-compare">{{ current_variant.compare_at_price | money }}</span>
+          {% endif %}
+          <span class="prod-price" id="variant-price">{{ current_variant.price | money }}</span>
+          <span class="prod-price-incl">incl. BTW</span>
+        </div>
+
+        {% comment %} Goudlijn {% endcomment %}
+        <span class="gold-rule"></span>
+
+        {% comment %} Omschrijving {% endcomment %}
+        {% if product.description != blank %}
+          <div class="prod-description">
+            {{ product.description }}
+          </div>
+        {% endif %}
+
+        {% comment %} Marchien's noot (via metafield of tags) {% endcomment %}
+        {% if product.metafields.custom.marchien_note != blank %}
+          <div class="prod-marchien">
+            <span class="prod-marchien__label">✦ Marchien zegt</span>
+            <p class="prod-marchien__text">{{ product.metafields.custom.marchien_note }}</p>
+          </div>
+        {% endif %}
+
+        {% comment %} Productspecificaties (via metafields) {% endcomment %}
+        {% if product.metafields.custom.hoogte != blank
+            or product.metafields.custom.materiaal != blank
+            or product.metafields.custom.herkomst != blank %}
+          <div class="prod-specs">
+            <h3 class="prod-specs__title">Specificaties</h3>
+            <dl class="prod-specs__list">
+              {% if product.metafields.custom.hoogte != blank %}
+                <div class="prod-spec">
+                  <dt>Hoogte</dt>
+                  <dd>{{ product.metafields.custom.hoogte }}</dd>
+                </div>
+              {% endif %}
+              {% if product.metafields.custom.breedte != blank %}
+                <div class="prod-spec">
+                  <dt>Breedte</dt>
+                  <dd>{{ product.metafields.custom.breedte }}</dd>
+                </div>
+              {% endif %}
+              {% if product.metafields.custom.materiaal != blank %}
+                <div class="prod-spec">
+                  <dt>Materiaal</dt>
+                  <dd>{{ product.metafields.custom.materiaal }}</dd>
+                </div>
+              {% endif %}
+              {% if product.metafields.custom.herkomst != blank %}
+                <div class="prod-spec">
+                  <dt>Herkomst</dt>
+                  <dd>{{ product.metafields.custom.herkomst }}</dd>
+                </div>
+              {% endif %}
+            </dl>
+          </div>
+        {% endif %}
+
+        {% comment %} === BESTELFORMULIER === {% endcomment %}
+        {% form 'product', product, id: 'product-form', novalidate: 'novalidate' %}
+          <input type="hidden" name="id" id="variant-id" value="{{ current_variant.id }}">
+
+          {% comment %} Varianten — alleen tonen als er meer dan 1 is {% endcomment %}
+          {% if product.has_only_default_variant == false %}
+            <div class="prod-variants">
+              {% for option in product.options_with_values %}
+                <div class="prod-option">
+                  <label class="prod-option__label">{{ option.name }}</label>
+                  <div class="prod-option__values">
+                    {% for value in option.values %}
+                      {% assign variant_available = false %}
+                      {% for variant in product.variants %}
+                        {% if variant.title contains value and variant.available %}
+                          {% assign variant_available = true %}
+                        {% endif %}
+                      {% endfor %}
+                      <button
+                        type="button"
+                        class="prod-swatch {% unless variant_available %}prod-swatch--unavail{% endunless %}"
+                        data-option-index="{{ option.position }}"
+                        data-option-value="{{ value | escape }}"
+                        aria-label="{{ option.name }}: {{ value }}"
+                      >
+                        {{ value }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% comment %} Afhalen of verzenden {% endcomment %}
+          <div class="prod-delivery">
+            <h3 class="prod-delivery__title">Hoe wil je het ontvangen?</h3>
+            <div class="prod-delivery__options">
+              <label class="delivery-opt">
+                <input type="radio" name="properties[Levering]" value="Afhalen in Zuidlaren" checked class="delivery-opt__radio">
+                <span class="delivery-opt__box">
+                  <span class="delivery-opt__icon">📍</span>
+                  <span class="delivery-opt__info">
+                    <strong>Afhalen in Zuidlaren</strong>
+                    <small>Stationsweg 2 · Gratis</small>
+                  </span>
+                </span>
+              </label>
+              <label class="delivery-opt">
+                <input type="radio" name="properties[Levering]" value="Verzenden" class="delivery-opt__radio">
+                <span class="delivery-opt__box">
+                  <span class="delivery-opt__icon">📦</span>
+                  <span class="delivery-opt__info">
+                    <strong>Verzenden</strong>
+                    <small>Bezorgkosten berekend bij afrekenen</small>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {% comment %} Kaartje meesturen {% endcomment %}
+          <div class="prod-note">
+            <label for="gift-note" class="prod-note__label">
+              Wil je een kaartje meesturen? <span>(optioneel)</span>
+            </label>
+            <textarea
+              id="gift-note"
+              name="properties[Kaartje]"
+              class="prod-note__input"
+              placeholder="Schrijf hier je boodschap..."
+              rows="3"
+              maxlength="250"
+            ></textarea>
+          </div>
+
+          {% comment %} Toevoegen-knop {% endcomment %}
+          <div class="prod-form-actions">
+            {% if current_variant.available %}
+              <button type="submit" name="add" class="btn-primary prod-add-btn" id="add-to-cart">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                In winkelwagen
+              </button>
+              {{ form | payment_button }}
+            {% else %}
+              <button type="button" disabled class="prod-add-btn prod-add-btn--disabled">
+                Uitverkocht
+              </button>
+            {% endif %}
+          </div>
+
+        {% endform %}
+
+        {% comment %} Vertrouwensstrookje {% endcomment %}
+        <div class="prod-trust">
+          <div class="prod-trust__item">
+            <span>✦</span>
+            <span>Handpersoonlijk geselecteerd door Marchien</span>
+          </div>
+          <div class="prod-trust__item">
+            <span>✦</span>
+            <span>Afhalen mogelijk in Zuidlaren</span>
+          </div>
+          <div class="prod-trust__item">
+            <span>✦</span>
+            <span>Vragen? Bel 06-40356687</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {% comment %} Gerelateerde producten {% endcomment %}
+    {% if section.settings.show_related and collection %}
+      <div class="prod-related">
+        <span class="sec-label">Uit dezelfde collectie</span>
+        <h2 class="sec-title">Bekijk ook</h2>
+        <div class="fp-grid" style="margin-top:24px">
+          {% assign related = collection.products | where: 'id', product.id | map: 'id' %}
+          {% for rel_product in collection.products limit: 4 %}
+            {% unless rel_product.id == product.id %}
+              <div class="prod-card">
+                <a href="{{ rel_product.url }}" class="prod-card__media-link">
+                  <div class="prod-card__media">
+                    {% if rel_product.featured_image %}
+                      <img
+                        src="{{ rel_product.featured_image | image_url: width: 500 }}"
+                        alt="{{ rel_product.featured_image.alt | escape | default: rel_product.title }}"
+                        width="500" height="500"
+                        loading="lazy"
+                        class="prod-card__img"
+                      >
+                    {% else %}
+                      <div class="prod-card__no-img"></div>
+                    {% endif %}
+                  </div>
+                </a>
+                <div class="prod-card__body">
+                  <h3 class="prod-card__title"><a href="{{ rel_product.url }}">{{ rel_product.title | escape }}</a></h3>
+                  <div class="prod-card__price-row">
+                    <span class="prod-card__price">{{ rel_product.price | money }}</span>
+                  </div>
+                  <a href="{{ rel_product.url }}" class="btn-primary prod-card__btn">Bekijk</a>
+                </div>
+              </div>
+            {% endunless %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .prod-page { padding: 32px 0 72px; }
+
+  /* Breadcrumb */
+  .prod-breadcrumb {
+    font-size: 0.78rem;
+    color: var(--color-muted);
+    margin-bottom: 24px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .prod-breadcrumb a { color: var(--color-muted); text-decoration: none; }
+  .prod-breadcrumb a:hover { color: var(--color-gold); }
+
+  /* Layout */
+  .prod-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+    margin-bottom: 72px;
+  }
+
+  /* Galerij */
+  .prod-gallery__main {
+    position: sticky;
+    top: 100px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--color-bg-2);
+    aspect-ratio: 1;
+  }
+
+  .prod-gallery__main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .prod-gallery__no-img {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .prod-gallery__thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .prod-gallery__thumb {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 2px solid var(--color-border);
+    background: var(--color-bg-3);
+    cursor: pointer;
+    transition: border-color var(--transition);
+    padding: 0;
+  }
+
+  .prod-gallery__thumb:hover,
+  .prod-gallery__thumb--active {
+    border-color: var(--color-gold);
+  }
+
+  .prod-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Info kant */
+  .prod-vendor {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .prod-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-foreground);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .prod-price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .prod-price {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    font-family: var(--font-heading);
+    font-style: italic;
+  }
+
+  .prod-price-compare {
+    font-size: 1rem;
+    color: var(--color-muted);
+    text-decoration: line-through;
+  }
+
+  .prod-price-incl {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  /* Beschrijving */
+  .prod-description {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: rgba(245,238,228,0.8);
+    margin-bottom: 20px;
+  }
+
+  .prod-description p { margin-bottom: 10px; }
+  .prod-description ul, .prod-description ol {
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  .prod-description li { margin-bottom: 4px; }
+
+  /* Marchien noot */
+  .prod-marchien {
+    background: var(--color-bg-2);
+    border-left: 3px solid var(--color-gold);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+
+  .prod-marchien__label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .prod-marchien__text {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--color-foreground);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Specificaties */
+  .prod-specs {
+    background: var(--color-bg-2);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-border);
+  }
+
+  .prod-specs__title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 12px;
+    font-family: var(--font-body);
+    font-style: normal;
+  }
+
+  .prod-specs__list { display: flex; flex-direction: column; gap: 8px; }
+
+  .prod-spec {
+    display: flex;
+    gap: 16px;
+    font-size: 0.85rem;
+  }
+
+  .prod-spec dt {
+    color: var(--color-muted);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  .prod-spec dd {
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  /* Varianten */
+  .prod-variants { margin-bottom: 20px; }
+
+  .prod-option { margin-bottom: 16px; }
+
+  .prod-option__label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .prod-option__values { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .prod-swatch {
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--color-border);
+    background: transparent;
+    color: var(--color-foreground);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: var(--font-body);
+  }
+
+  .prod-swatch:hover { border-color: var(--color-gold); color: var(--color-gold); }
+  .prod-swatch.selected { border-color: var(--color-accent); background: var(--color-accent); color: #fff; }
+  .prod-swatch--unavail { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+
+  /* Levering opties */
+  .prod-delivery {
+    margin-bottom: 20px;
+    background: var(--color-bg-2);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    border: 1px solid var(--color-border);
+  }
+
+  .prod-delivery__title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 12px;
+    font-family: var(--font-body);
+    font-style: normal;
+  }
+
+  .prod-delivery__options { display: flex; flex-direction: column; gap: 8px; }
+
+  .delivery-opt { cursor: pointer; }
+
+  .delivery-opt__radio { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  .delivery-opt__box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--color-border);
+    transition: all var(--transition);
+  }
+
+  .delivery-opt__radio:checked + .delivery-opt__box {
+    border-color: var(--color-gold);
+    background: rgba(201,168,92,0.08);
+  }
+
+  .delivery-opt__icon { font-size: 1.2rem; }
+
+  .delivery-opt__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .delivery-opt__info strong {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+  }
+
+  .delivery-opt__info small {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  /* Kaartje noot */
+  .prod-note { margin-bottom: 20px; }
+
+  .prod-note__label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .prod-note__label span { font-weight: 400; opacity: 0.7; }
+
+  .prod-note__input {
+    width: 100%;
+    background: var(--color-bg-2);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-foreground);
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    font-family: var(--font-body);
+    resize: vertical;
+    transition: border-color var(--transition);
+    line-height: 1.5;
+  }
+
+  .prod-note__input:focus {
+    outline: none;
+    border-color: var(--color-gold);
+  }
+
+  .prod-note__input::placeholder { color: var(--color-muted); }
+
+  /* Form actions */
+  .prod-form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .prod-add-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 15px;
+    font-size: 0.95rem;
+  }
+
+  .prod-add-btn--disabled {
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-3);
+    color: var(--color-muted);
+    font-weight: 600;
+    cursor: not-allowed;
+    border: none;
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+  }
+
+  /* Dynamic checkout button */
+  .shopify-payment-button {
+    margin-top: 4px;
+  }
+
+  .shopify-payment-button__button {
+    border-radius: var(--radius-pill) !important;
+    font-family: var(--font-body) !important;
+  }
+
+  /* Vertrouwen */
+  .prod-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .prod-trust__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: var(--color-muted);
+  }
+
+  .prod-trust__item span:first-child {
+    color: var(--color-gold);
+    font-size: 0.6rem;
+  }
+
+  /* Gerelateerde producten */
+  .prod-related {
+    padding-top: 56px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .prod-layout {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .prod-gallery__main {
+      position: static;
+    }
+
+    .prod-delivery__options {
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .prod-title { font-size: 1.5rem; }
+    .prod-price { font-size: 1.3rem; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  // Galerij thumbnails
+  document.querySelectorAll('.prod-gallery__thumb').forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      var mainImg = document.getElementById('gallery-main-img');
+      if (!mainImg) return;
+      mainImg.src = thumb.dataset.src;
+      mainImg.alt = thumb.dataset.alt || '';
+      document.querySelectorAll('.prod-gallery__thumb').forEach(function(t) {
+        t.classList.remove('prod-gallery__thumb--active');
+      });
+      thumb.classList.add('prod-gallery__thumb--active');
+    });
+  });
+
+  // Variant swatches
+  document.querySelectorAll('.prod-swatch').forEach(function(swatch) {
+    swatch.addEventListener('click', function() {
+      var optionIndex = swatch.dataset.optionIndex;
+      document.querySelectorAll('[data-option-index="' + optionIndex + '"]').forEach(function(s) {
+        s.classList.remove('selected');
+      });
+      swatch.classList.add('selected');
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Productpagina",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Gerelateerde producten tonen",
+      "default": true
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

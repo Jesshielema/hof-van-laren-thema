@@ -1,0 +1,130 @@
+{
+  "general": {
+    "404": "Not found",
+    "article": "Article",
+    "block": "Block",
+    "blog": "Blog",
+    "cart": "Cart",
+    "collection": "Collection",
+    "collections": "Collections",
+    "collection_card": "Collection card",
+    "collections_grid": "Collections grid",
+    "colors": "Colors",
+    "column": "Column",
+    "content": "Content",
+    "custom_section": "Custom section",
+    "fonts": "Fonts",
+    "footer": "Footer",
+    "group": "Group",
+    "header": "Header",
+    "layout": "Layout",
+    "main": "Main",
+    "page": "Page",
+    "password": "Password",
+    "primary": "Primary",
+    "product": "Product",
+    "row": "Row",
+    "search": "Search",
+    "secondary": "Secondary",
+    "section": "Section",
+    "settings": "Settings",
+    "sidebar": "Sidebar",
+    "text": "Text",
+    "theme": "Theme",
+    "typography": "Typography"
+  },
+  "sections": {
+    "homepage_hero": {
+      "name": "Homepage hero"
+    },
+    "marchien_quote": {
+      "name": "Citaat – Marchien"
+    },
+    "gelegenheden": {
+      "name": "Gelegenheden & collectie",
+      "occasions_header": "Gelegenheden",
+      "images_header": "Collectie afbeeldingen"
+    },
+    "despots": {
+      "name": "Uitgelicht – Des Pots"
+    },
+    "instagram_cta": {
+      "name": "Instagram CTA"
+    }
+  },
+  "labels": {
+    "alignment": "Alignment",
+    "attribution": "Naam / bronvermelding",
+    "background": "Background",
+    "background_image": "Achtergrondafbeelding",
+    "collection_image_1": "Afbeelding collectie 1",
+    "collection_image_2": "Afbeelding collectie 2",
+    "collection_image_3": "Afbeelding collectie 3",
+    "collection_url_1": "Link collectie 1",
+    "collection_url_2": "Link collectie 2",
+    "collection_url_3": "Link collectie 3",
+    "cta_text": "Knoptekst",
+    "cta_url": "Knoplink",
+    "description": "Beschrijving",
+    "foreground": "Foreground",
+    "grid_gap": "Grid spacing",
+    "grid_item_width": "Grid item width",
+    "heading": "Titel",
+    "heading_highlight": "Gemarkeerde tekst (cursief goud)",
+    "hero_image": "Hero afbeelding",
+    "image": "Afbeelding",
+    "input_corner_radius": "Input corner radius",
+    "instagram_handle": "Instagram-gebruikersnaam",
+    "instagram_url": "Instagram-profiellink",
+    "label": "Label",
+    "layout_direction": "Layout direction",
+    "link_text": "Linktekst",
+    "link_url": "Link",
+    "logo": "Logo",
+    "menu": "Menu",
+    "customer_account_menu": "Customer account menu",
+    "occasion_1_icon": "Icoon gelegenheid 1",
+    "occasion_1_text": "Naam gelegenheid 1",
+    "occasion_1_url": "Link gelegenheid 1",
+    "occasion_2_icon": "Icoon gelegenheid 2",
+    "occasion_2_text": "Naam gelegenheid 2",
+    "occasion_2_url": "Link gelegenheid 2",
+    "occasion_3_icon": "Icoon gelegenheid 3",
+    "occasion_3_text": "Naam gelegenheid 3",
+    "occasion_3_url": "Link gelegenheid 3",
+    "occasion_4_icon": "Icoon gelegenheid 4",
+    "occasion_4_text": "Naam gelegenheid 4",
+    "occasion_4_url": "Link gelegenheid 4",
+    "padding": "Padding",
+    "page_margin": "Page margin",
+    "page_width": "Page width",
+    "quote": "Citaat",
+    "show_payment_icons": "Show payment icons",
+    "text_style": "Text style",
+    "text": "Text"
+  },
+  "options": {
+    "alignment": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right"
+    },
+    "direction": {
+      "horizontal": "Horizontal",
+      "vertical": "Vertical"
+    },
+    "page_width": {
+      "narrow": "Narrow",
+      "wide": "Wide"
+    },
+    "size": {
+      "large": "Large",
+      "small": "Small"
+    },
+    "text_style": {
+      "title": "Title",
+      "subtitle": "Subtitle",
+      "normal": "Normal text"
+    }
+  }
+}

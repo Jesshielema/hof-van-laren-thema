@@ -1,0 +1,226 @@
+{%- render 'section-typo' -%}
+<section class="insp-feat full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="insp-feat__inner">
+
+    <div class="insp-feat__tekst">
+      <h2 class="insp-feat__heading">
+        {{ section.settings.heading | default: 'Van winkel naar' | escape }}<br>
+        <em class="insp-feat__heading-em">{{ section.settings.heading_highlight | default: 'woonkamer!' | escape }}</em>
+      </h2>
+      {% if section.settings.body != blank %}
+        <div class="insp-feat__body">{{ section.settings.body }}</div>
+      {% endif %}
+      <div class="insp-feat__social">
+        {% if section.settings.instagram_url != blank %}
+          <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" class="insp-feat__social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+            </svg>
+            {{ section.settings.instagram_handle | default: '@hofvanlaren' | escape }}
+          </a>
+        {% endif %}
+        {% if section.settings.facebook_url != blank %}
+          <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener" class="insp-feat__social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+            {{ section.settings.facebook_handle | default: '@hofvanlaren' | escape }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="insp-feat__image-wrap">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          alt="{{ section.settings.image.alt | escape }}"
+          width="900"
+          loading="lazy"
+          class="insp-feat__image"
+        >
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'insp-feat__image insp-feat__image--placeholder' }}
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .insp-feat {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    overflow: hidden;
+  }
+
+  .insp-feat__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+  }
+
+  .insp-feat__tekst {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 3.5rem;
+    gap: 1.5rem;
+  }
+
+  .insp-feat__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    color: var(--color-background);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .insp-feat__heading-em {
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .insp-feat__body {
+    font-size: 0.925rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(245,238,228,0.78);
+    max-width: 420px;
+  }
+
+  .insp-feat__body p { margin: 0 0 0.75rem; }
+  .insp-feat__body p:last-child { margin: 0; }
+  .insp-feat__body strong { font-weight: 600; color: var(--color-background); }
+  .insp-feat__body a { color: var(--color-gold); text-decoration: none; }
+
+  .insp-feat__social {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.25rem;
+  }
+
+  .insp-feat__social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgba(245,238,228,0.7);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .insp-feat__social-link:hover {
+    color: var(--color-background);
+  }
+
+  .insp-feat__image-wrap {
+    overflow: hidden;
+  }
+
+  .insp-feat__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .insp-feat__image-wrap:hover .insp-feat__image {
+    transform: scale(1.03);
+  }
+
+  .insp-feat__image--placeholder {
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    background: rgba(245,238,228,0.1);
+  }
+
+  @media (max-width: 768px) {
+    .insp-feat__inner {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .insp-feat__image-wrap {
+      height: 300px;
+      order: -1;
+    }
+
+    .insp-feat__tekst {
+      padding: 2.5rem 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Inspiratie – Feature",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Koptekst",
+      "default": "Van winkel naar"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Cursief gedeelte",
+      "default": "woonkamer!"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Tekst",
+      "default": "<p>Bloemen en mooie objecten brengen sfeer in huis, maar soms weet je niet waar je moet beginnen.</p><p>Hier zie je hoe andere klanten hun Hof van Laren-aankopen thuis hebben gestyled — van een <strong>Des Pots</strong> vaas in de vensterbank tot een <strong>tak</strong> die een hele kamer verandert. En elke dag deelt Marchien nieuwe ideeën op <a href=\"#\">Instagram</a>.</p><p>Laat je raken. En kom gerust langs als je wil sparren.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Afbeelding (rechts)"
+    },
+    {
+      "type": "header",
+      "content": "Social media"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "@hofvanlaren"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "text",
+      "id": "facebook_handle",
+      "label": "Facebook handle",
+      "default": "@hofvanlaren"
+    },
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ],
+  "presets": [{ "name": "Inspiratie – Feature" }]
+}
+{% endschema %}

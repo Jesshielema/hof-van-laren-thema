@@ -1,0 +1,105 @@
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "title": "Collectie",
+        "group_1_label": "Objecten",
+        "group_2_label": "Bloemen & Planten",
+        "group_3_label": "Cadeaus"
+      }
+    },
+    "uitgelicht": {
+      "type": "despots-featured",
+      "settings": {
+        "label": "Uitgelicht",
+        "heading": "Des Pots",
+        "description": "<p>Deze potten zijn geen vazen. Dit zijn <strong>karakters<\/strong>. Des Pots maakt stukken die een kamer direct veranderen — vol kleur, vol leven, vol persoonlijkheid. Of je er bloemen in zet of niet: ze staan prachtig op zichzelf.<\/p>",
+        "cta_text": "Bekijk collectie",
+        "cta_url": "/collections/des-pots"
+      }
+    },
+    "nieuw-binnen": {
+      "type": "featured-products",
+      "settings": {
+        "label": "Vers binnen",
+        "heading": "Nieuw binnen",
+        "subtext": "De laatste aanwinsten van Marchien",
+        "products_count": 4,
+        "cta_text": "Alles bekijken",
+        "cta_url": "/collections/nieuw-binnen"
+      }
+    },
+    "feature-1": {
+      "type": "categorie-feature",
+      "settings": {
+        "heading": "Echeveria",
+        "body": "<p>De Echeveria is één van de meest geliefde <strong>vetplanten<\/strong> en dat is niet zonder reden. Met zijn perfecte rozatvorm en <strong>prachtige kleuren<\/strong> — van blauwgrijs tot zachtroze en paars — lijkt het bijna alsof deze plant met de hand is gevormd.<\/p>",
+        "cta_text": "Bekijk alle vetplanten",
+        "cta_url": "/collections/vetplanten",
+        "image_side": "right"
+      }
+    },
+    "categorie-1": {
+      "type": "featured-products",
+      "settings": {
+        "label": "Categorie",
+        "heading": "Vazen",
+        "products_count": 4,
+        "cta_text": "Alle vazen",
+        "cta_url": "/collections/vazen"
+      }
+    },
+    "feature-2": {
+      "type": "categorie-feature",
+      "settings": {
+        "heading": "Sierpotten",
+        "body": "<p>Een mooie sierpot maakt het verschil in elk interieur. Van stoer aardewerk tot <strong>handgeschilderd porselein<\/strong> — elk stuk is met zorg geselecteerd door Marchien.<\/p>",
+        "cta_text": "Bekijk alle sierpotten",
+        "cta_url": "/collections/sierpotten",
+        "image_side": "left"
+      }
+    },
+    "categorie-2": {
+      "type": "featured-products",
+      "settings": {
+        "label": "Categorie",
+        "heading": "Zijdebloemen",
+        "products_count": 4,
+        "cta_text": "Alle zijdebloemen",
+        "cta_url": "/collections/zijdebloemen"
+      }
+    },
+    "feature-3": {
+      "type": "categorie-feature",
+      "settings": {
+        "heading": "Zijdebloemen",
+        "body": "<p>Altijd in bloei, nooit verwelkt. Onze <strong>zijdebloemen<\/strong> zijn zo levensecht dat gasten ze steevast aanraken om te checken of ze echt zijn. Perfect voor plekken waar echte bloemen het lastig hebben.<\/p>",
+        "cta_text": "Bekijk alle zijdebloemen",
+        "cta_url": "/collections/zijdebloemen",
+        "image_side": "right"
+      }
+    },
+    "categorie-3": {
+      "type": "featured-products",
+      "settings": {
+        "label": "Categorie",
+        "heading": "Cadeaus",
+        "products_count": 4,
+        "cta_text": "Alle cadeaus",
+        "cta_url": "/collections/cadeaus"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "uitgelicht",
+    "nieuw-binnen",
+    "feature-1",
+    "categorie-1",
+    "feature-2",
+    "categorie-2",
+    "feature-3",
+    "categorie-3"
+  ]
+}

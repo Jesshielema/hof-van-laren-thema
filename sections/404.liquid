@@ -1,0 +1,171 @@
+{%- render 'section-typo' -%}
+<section class="not-found full-width"{%- if s_style != blank %} style="{{ s_style }}"{%- endif -%}>
+  <div class="not-found__inner">
+
+    <span class="not-found__label">404</span>
+
+    <h1 class="not-found__heading">
+      Deze pagina konden<br>
+      <em>we niet vinden</em>
+    </h1>
+
+    <div class="not-found__rule" aria-hidden="true"></div>
+
+    <p class="not-found__body">
+      Net als bloemen verandert ook onze collectie met de seizoenen mee.<br>
+      De pagina die je zoekt bestaat helaas niet meer of is verplaatst.
+    </p>
+
+    <p class="not-found__body not-found__body--sub">
+      Ontdek ondertussen de nieuwste collecties, bijzondere objecten<br>
+      en inspiratie uit onze winkel in Zuidlaren.
+    </p>
+
+    <div class="not-found__ctas">
+      <a href="{{ routes.root_url }}" class="not-found__cta not-found__cta--primary">
+        Terug naar home →
+      </a>
+      <a href="{{ routes.collections_url }}" class="not-found__cta not-found__cta--outline">
+        Bekijk de collectie
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .not-found {
+    background-color: var(--color-background);
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 0;
+  }
+
+  .not-found__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .not-found__label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .not-found__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 400;
+    font-style: normal;
+    color: var(--color-foreground);
+    line-height: 1.2;
+    margin: 0 0 1.75rem;
+  }
+
+  .not-found__heading em {
+    font-style: italic;
+  }
+
+  .not-found__rule {
+    width: 40px;
+    height: 1px;
+    background-color: var(--color-gold);
+    margin-bottom: 1.75rem;
+  }
+
+  .not-found__body {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--color-muted);
+    margin: 0 0 0.5rem;
+    max-width: 480px;
+  }
+
+  .not-found__body--sub {
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .not-found__ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .not-found__cta {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.8rem 1.75rem;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .not-found__cta--primary {
+    background-color: var(--color-gold);
+    color: var(--color-background);
+  }
+
+  .not-found__cta--primary:hover {
+    background-color: var(--color-gold-light);
+  }
+
+  .not-found__cta--outline {
+    background-color: transparent;
+    color: var(--color-foreground);
+    border: 1.5px solid rgba(28,20,16,0.22);
+  }
+
+  .not-found__cta--outline:hover {
+    border-color: rgba(28,20,16,0.45);
+    background-color: rgba(28,20,16,0.04);
+  }
+
+  @media (max-width: 600px) {
+    .not-found {
+      padding: 4rem 0;
+    }
+
+    .not-found__ctas {
+      flex-direction: column;
+    }
+
+    .not-found__cta {
+      width: 100%;
+      text-align: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "404 pagina",
+  "settings": [
+    { "type": "header", "content": "Typografie" },
+    { "type": "select", "id": "heading_font", "label": "Koppen — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }], "default": "inherit" },
+    { "type": "select", "id": "heading_weight", "label": "Koppen — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }, { "value": "800", "label": "Extra Bold (800)" }], "default": "inherit" },
+    { "type": "select", "id": "heading_style", "label": "Koppen — stijl", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "normal", "label": "Normaal" }, { "value": "italic", "label": "Cursief" }], "default": "inherit" },
+    { "type": "color", "id": "heading_color", "label": "Koppen — kleur" },
+    { "type": "select", "id": "body_font", "label": "Tekst — lettertype", "options": [{ "value": "inherit", "label": "— Standaard thema —" }, { "value": "'Archivo', sans-serif", "label": "Archivo" }, { "value": "'skeena', 'Cormorant Garamond', Georgia, serif", "label": "Skeena" }], "default": "inherit" },
+    { "type": "select", "id": "body_weight", "label": "Tekst — dikte", "options": [{ "value": "inherit", "label": "— Standaard —" }, { "value": "100", "label": "Thin (100)" }, { "value": "200", "label": "Extra Light (200)" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "SemiBold (600)" }, { "value": "700", "label": "Bold (700)" }], "default": "inherit" },
+    { "type": "color", "id": "body_color", "label": "Tekst — kleur" }
+  ]
+}
+{% endschema %}
