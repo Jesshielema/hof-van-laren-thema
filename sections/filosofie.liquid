@@ -3,9 +3,6 @@
   <div class="filosofie__inner">
 
     <div class="filosofie__tekst">
-      {% if section.settings.label != blank %}
-        <span class="filosofie__label">{{ section.settings.label | escape }}</span>
-      {% endif %}
       <h2 class="filosofie__title">{{ section.settings.title | default: 'Waarom geen standaard boeketten?' }}</h2>
       <div class="filosofie__rule" aria-hidden="true"></div>
       {% if section.settings.body != blank %}

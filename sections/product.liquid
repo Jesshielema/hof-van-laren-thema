@@ -96,7 +96,6 @@
         {% comment %} Marchien's noot (via metafield of tags) {% endcomment %}
         {% if product.metafields.custom.marchien_note != blank %}
           <div class="prod-marchien">
-            <span class="prod-marchien__label">✦ Marchien zegt</span>
             <p class="prod-marchien__text">{{ product.metafields.custom.marchien_note }}</p>
           </div>
         {% endif %}
@@ -177,7 +176,6 @@
               <label class="delivery-opt">
                 <input type="radio" name="properties[Levering]" value="Afhalen in Zuidlaren" checked class="delivery-opt__radio">
                 <span class="delivery-opt__box">
-                  <span class="delivery-opt__icon">📍</span>
                   <span class="delivery-opt__info">
                     <strong>Afhalen in Zuidlaren</strong>
                     <small>Stationsweg 2 · Gratis</small>
@@ -187,7 +185,6 @@
               <label class="delivery-opt">
                 <input type="radio" name="properties[Levering]" value="Verzenden" class="delivery-opt__radio">
                 <span class="delivery-opt__box">
-                  <span class="delivery-opt__icon">📦</span>
                   <span class="delivery-opt__info">
                     <strong>Verzenden</strong>
                     <small>Bezorgkosten berekend bij afrekenen</small>
@@ -233,18 +230,9 @@
 
         {% comment %} Vertrouwensstrookje {% endcomment %}
         <div class="prod-trust">
-          <div class="prod-trust__item">
-            <span>✦</span>
-            <span>Handpersoonlijk geselecteerd door Marchien</span>
-          </div>
-          <div class="prod-trust__item">
-            <span>✦</span>
-            <span>Afhalen mogelijk in Zuidlaren</span>
-          </div>
-          <div class="prod-trust__item">
-            <span>✦</span>
-            <span>Vragen? Bel 06-40356687</span>
-          </div>
+          <div class="prod-trust__item">Handpersoonlijk geselecteerd door Marchien</div>
+          <div class="prod-trust__item">Afhalen mogelijk in Zuidlaren</div>
+          <div class="prod-trust__item">Vragen? Bel 06-40356687</div>
         </div>
 
       </div>
@@ -253,7 +241,6 @@
     {% comment %} Gerelateerde producten {% endcomment %}
     {% if section.settings.show_related and collection %}
       <div class="prod-related">
-        <span class="sec-label">Uit dezelfde collectie</span>
         <h2 class="sec-title">Bekijk ook</h2>
         <div class="fp-grid" style="margin-top:24px">
           {% assign related = collection.products | where: 'id', product.id | map: 'id' %}
@@ -293,37 +280,37 @@
 </div>
 
 {% stylesheet %}
-  .prod-page { padding: 32px 0 72px; }
+  .prod-page { padding: 28px 0 80px; }
 
   /* Breadcrumb */
   .prod-breadcrumb {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     color: var(--color-muted);
-    margin-bottom: 24px;
+    margin-bottom: 32px;
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
   }
   .prod-breadcrumb a { color: var(--color-muted); text-decoration: none; }
-  .prod-breadcrumb a:hover { color: var(--color-gold); }
+  .prod-breadcrumb a:hover { color: var(--color-foreground); }
 
   /* Layout */
   .prod-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 56px;
+    gap: 64px;
     align-items: start;
-    margin-bottom: 72px;
+    margin-bottom: 80px;
   }
 
-  /* Galerij */
+  /* Galerij — portrait formaat */
   .prod-gallery__main {
     position: sticky;
     top: 100px;
-    border-radius: var(--radius);
+    border-radius: 2px;
     overflow: hidden;
     background: var(--color-bg-2);
-    aspect-ratio: 1;
+    aspect-ratio: 3 / 4;
   }
 
   .prod-gallery__main-img {
@@ -344,20 +331,20 @@
 
   .prod-gallery__thumbs {
     display: flex;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 6px;
+    margin-top: 8px;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
   }
 
   .prod-gallery__thumb {
     flex-shrink: 0;
-    width: 72px;
-    height: 72px;
-    border-radius: var(--radius-sm);
+    width: 64px;
+    height: 80px;
+    border-radius: 2px;
     overflow: hidden;
-    border: 2px solid var(--color-border);
-    background: var(--color-bg-3);
+    border: 1.5px solid var(--color-border);
+    background: var(--color-bg-2);
     cursor: pointer;
     transition: border-color var(--transition);
     padding: 0;
@@ -365,7 +352,7 @@
 
   .prod-gallery__thumb:hover,
   .prod-gallery__thumb--active {
-    border-color: var(--color-gold);
+    border-color: var(--color-foreground);
   }
 
   .prod-gallery__thumb img {
@@ -374,59 +361,62 @@
     object-fit: cover;
   }
 
-  /* Info kant */
+  /* Info kolom */
   .prod-vendor {
-    font-size: 0.68rem;
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-gold);
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .prod-title {
-    font-family: var(--font-heading);
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-family: 'skeena', 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
     font-style: italic;
     font-weight: 400;
     color: var(--color-foreground);
-    line-height: 1.15;
-    margin-bottom: 16px;
+    line-height: 1.1;
+    margin-bottom: 20px;
   }
 
   .prod-price-block {
     display: flex;
     align-items: baseline;
     gap: 10px;
-    margin-bottom: 4px;
+    margin-bottom: 20px;
   }
 
   .prod-price {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--color-gold);
-    font-family: var(--font-heading);
-    font-style: italic;
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    letter-spacing: -0.01em;
   }
 
   .prod-price-compare {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--color-muted);
     text-decoration: line-through;
   }
 
   .prod-price-incl {
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
     font-size: 0.75rem;
     color: var(--color-muted);
   }
 
   /* Beschrijving */
   .prod-description {
-    font-size: 0.92rem;
-    line-height: 1.8;
-    color: rgba(245,238,228,0.8);
-    margin-bottom: 20px;
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--color-muted);
+    margin-bottom: 24px;
   }
 
   .prod-description p { margin-bottom: 10px; }
@@ -438,27 +428,15 @@
 
   /* Marchien noot */
   .prod-marchien {
-    background: var(--color-bg-2);
-    border-left: 3px solid var(--color-gold);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-  }
-
-  .prod-marchien__label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    display: block;
-    margin-bottom: 6px;
+    border-left: 2px solid var(--color-gold);
+    padding: 4px 0 4px 16px;
+    margin-bottom: 24px;
   }
 
   .prod-marchien__text {
-    font-family: var(--font-heading);
+    font-family: 'skeena', 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--color-foreground);
     line-height: 1.6;
     margin: 0;
@@ -466,17 +444,15 @@
 
   /* Specificaties */
   .prod-specs {
-    background: var(--color-bg-2);
-    border-radius: var(--radius-sm);
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    border: 1px solid var(--color-border);
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .prod-specs__title {
-    font-size: 0.68rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-muted);
     margin-bottom: 12px;
@@ -504,56 +480,53 @@
   }
 
   /* Varianten */
-  .prod-variants { margin-bottom: 20px; }
+  .prod-variants { margin-bottom: 24px; }
 
-  .prod-option { margin-bottom: 16px; }
+  .prod-option { margin-bottom: 18px; }
 
   .prod-option__label {
-    font-size: 0.78rem;
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-muted);
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .prod-option__values { display: flex; gap: 8px; flex-wrap: wrap; }
 
   .prod-swatch {
-    padding: 7px 16px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--color-border);
+    padding: 8px 18px;
+    border-radius: 2px;
+    border: 1px solid var(--color-border);
     background: transparent;
     color: var(--color-foreground);
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     transition: all var(--transition);
     font-family: var(--font-body);
   }
 
-  .prod-swatch:hover { border-color: var(--color-gold); color: var(--color-gold); }
-  .prod-swatch.selected { border-color: var(--color-accent); background: var(--color-accent); color: #fff; }
-  .prod-swatch--unavail { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+  .prod-swatch:hover { border-color: var(--color-foreground); }
+  .prod-swatch.selected { border-color: var(--color-foreground); background: var(--color-foreground); color: var(--color-background); }
+  .prod-swatch--unavail { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
 
   /* Levering opties */
   .prod-delivery {
     margin-bottom: 20px;
-    background: var(--color-bg-2);
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    border: 1px solid var(--color-border);
   }
 
   .prod-delivery__title {
-    font-size: 0.78rem;
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-muted);
-    margin-bottom: 12px;
-    font-family: var(--font-body);
+    margin-bottom: 10px;
     font-style: normal;
   }
 
@@ -566,19 +539,17 @@
   .delivery-opt__box {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--color-border);
-    transition: all var(--transition);
+    padding: 14px 16px;
+    border-radius: 2px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-2);
+    transition: border-color var(--transition), background var(--transition);
   }
 
   .delivery-opt__radio:checked + .delivery-opt__box {
-    border-color: var(--color-gold);
-    background: rgba(201,168,92,0.08);
+    border-color: var(--color-foreground);
+    background: var(--color-background);
   }
-
-  .delivery-opt__icon { font-size: 1.2rem; }
 
   .delivery-opt__info {
     display: flex;
@@ -588,7 +559,7 @@
 
   .delivery-opt__info strong {
     font-size: 0.88rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--color-foreground);
   }
 
@@ -598,125 +569,126 @@
   }
 
   /* Kaartje noot */
-  .prod-note { margin-bottom: 20px; }
+  .prod-note { margin-bottom: 24px; }
 
   .prod-note__label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--color-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-foreground);
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
-  .prod-note__label span { font-weight: 400; opacity: 0.7; }
+  .prod-note__label span {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+  }
 
   .prod-note__input {
     width: 100%;
     background: var(--color-bg-2);
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
     color: var(--color-foreground);
-    padding: 10px 14px;
+    padding: 12px 14px;
     font-size: 0.88rem;
     font-family: var(--font-body);
     resize: vertical;
     transition: border-color var(--transition);
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .prod-note__input:focus {
     outline: none;
-    border-color: var(--color-gold);
+    border-color: var(--color-foreground);
   }
 
-  .prod-note__input::placeholder { color: var(--color-muted); }
+  .prod-note__input::placeholder { color: var(--color-muted); opacity: 0.6; }
 
   /* Form actions */
   .prod-form-actions {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
 
   .prod-add-btn {
     width: 100%;
     justify-content: center;
     padding: 15px;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
   }
 
   .prod-add-btn--disabled {
     width: 100%;
     text-align: center;
     padding: 14px;
-    border-radius: var(--radius-pill);
     background: var(--color-bg-3);
     color: var(--color-muted);
-    font-weight: 600;
+    font-weight: 500;
     cursor: not-allowed;
     border: none;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-family: var(--font-body);
+    border-radius: var(--radius-pill);
   }
 
   /* Dynamic checkout button */
-  .shopify-payment-button {
-    margin-top: 4px;
-  }
-
+  .shopify-payment-button { margin-top: 4px; }
   .shopify-payment-button__button {
     border-radius: var(--radius-pill) !important;
     font-family: var(--font-body) !important;
   }
 
-  /* Vertrouwen */
+  /* Trust-regels */
   .prod-trust {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     padding-top: 20px;
     border-top: 1px solid var(--color-border);
   }
 
   .prod-trust__item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--color-muted);
+    padding-left: 12px;
+    position: relative;
   }
 
-  .prod-trust__item span:first-child {
+  .prod-trust__item::before {
+    content: '—';
+    position: absolute;
+    left: 0;
     color: var(--color-gold);
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 
   /* Gerelateerde producten */
   .prod-related {
-    padding-top: 56px;
+    padding-top: 64px;
     border-top: 1px solid var(--color-border);
   }
 
   /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .prod-layout {
       grid-template-columns: 1fr;
-      gap: 28px;
+      gap: 32px;
     }
 
     .prod-gallery__main {
       position: static;
-    }
-
-    .prod-delivery__options {
-      gap: 8px;
+      aspect-ratio: 4 / 3;
     }
   }
 
   @media (max-width: 480px) {
-    .prod-title { font-size: 1.5rem; }
+    .prod-title { font-size: 1.6rem; }
     .prod-price { font-size: 1.3rem; }
+    .prod-page { padding: 16px 0 60px; }
   }
 {% endstylesheet %}
 

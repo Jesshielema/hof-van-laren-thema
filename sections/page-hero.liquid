@@ -13,9 +13,6 @@
   {% endif %}
 
   <div class="page-hero__inner">
-    {% if section.settings.label != blank %}
-      <span class="page-hero__label">{{ section.settings.label | escape }}</span>
-    {% endif %}
     <h1 class="page-hero__title">{{ section.settings.title | default: page.title }}</h1>
     {% if section.settings.subtitle != blank %}
       <p class="page-hero__subtitle">{{ section.settings.subtitle }}</p>

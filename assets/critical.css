@@ -135,14 +135,6 @@ h1, h2, h3, h4 {
 }
 .btn-gold:hover { background: var(--color-gold-light); transform: translateY(-1px); }
 
-/* Section label */
-.sec-label {
-  font-size: 0.68rem; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--color-gold);
-  display: block; margin-bottom: 6px;
-}
-
 /* Section title */
 .sec-title {
   font-family: var(--font-heading);
@@ -176,6 +168,27 @@ h1, h2, h3, h4 {
   max-width: var(--page-width);
   margin: 0 auto;
   padding: 0 var(--page-margin);
+}
+
+/* Mobile global fixes */
+@media (max-width: 480px) {
+  .sec-pad { padding: 40px 0; }
+  .sec-pad-sm { padding: 24px 0; }
+
+  .btn-primary,
+  .btn-gold {
+    padding: 11px 20px;
+    font-size: 0.85rem;
+  }
+
+  .btn-outline {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+
+  .sec-title {
+    font-size: 1.4rem;
+  }
 }
 
 /** Section layout utilities */

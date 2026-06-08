@@ -3,9 +3,6 @@
   <div class="stappen__inner">
 
     <div class="stappen__header">
-      {% if section.settings.label != blank %}
-        <span class="stappen__label">{{ section.settings.label | escape }}</span>
-      {% endif %}
       <h2 class="stappen__title">{{ section.settings.title | default: 'Hoe werkt het?' }}</h2>
       {% if section.settings.subtitle != blank %}
         <p class="stappen__subtitle">{{ section.settings.subtitle }}</p>

@@ -4,7 +4,6 @@
 
     {%- comment -%} Linkerkolom: formulier {%- endcomment -%}
     <div class="contact-section__form-col">
-      <p class="sec-label">{{ section.settings.label | default: 'Contact' }}</p>
       <h1 class="contact-section__heading">{{ section.settings.heading | default: 'Neem contact op' }}</h1>
       <div class="gold-rule"></div>
       {%- if section.settings.subtext != blank -%}

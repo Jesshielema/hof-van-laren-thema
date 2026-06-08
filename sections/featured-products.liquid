@@ -6,7 +6,6 @@
   <div class="container">
     <div class="fp-header">
       <div>
-        <span class="sec-label">{{ section.settings.label | default: 'Nu populair' }}</span>
         <h2 class="sec-title">{{ section.settings.heading | default: 'Dit is er nu binnen' }}</h2>
         {% if section.settings.subtext != blank %}
           <p class="fp-sub">{{ section.settings.subtext }}</p>
@@ -34,7 +33,7 @@
                       src="{{ product.featured_image | image_url: width: 600 }}"
                       alt="{{ product.featured_image.alt | escape | default: product.title }}"
                       width="600"
-                      height="600"
+                      height="800"
                       loading="lazy"
                       class="prod-card__img"
                     >
@@ -49,6 +48,8 @@
                   {% elsif product.tags contains 'populair' or product.tags contains 'Populair' %}
                     <span class="prod-card__badge prod-card__badge--pop">Populair</span>
                   {% endif %}
+
+                  <span class="prod-card__hover-btn">Bekijk product</span>
                 </div>
               </a>
               <div class="prod-card__body">
@@ -58,13 +59,14 @@
                 <h3 class="prod-card__title">
                   <a href="{{ product.url }}">{{ product.title | escape }}</a>
                 </h3>
+                <div class="prod-card__divider"></div>
                 <div class="prod-card__price-row">
                   {% if product.compare_at_price > product.price %}
                     <span class="prod-card__price-compare">{{ product.compare_at_price | money }}</span>
                   {% endif %}
                   <span class="prod-card__price">{{ product.price | money }}</span>
                 </div>
-                <a href="{{ product.url }}" class="btn-primary prod-card__btn">
+                <a href="{{ product.url }}" class="prod-card__btn">
                   Bekijk product
                 </a>
               </div>
@@ -93,13 +95,13 @@
 </div>
 
 {% stylesheet %}
-  .fp-section { padding: 60px 0; }
+  .fp-section { padding: 72px 0; }
 
   .fp-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
     gap: 20px;
     flex-wrap: wrap;
   }
@@ -120,27 +122,29 @@
   .fp-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 24px;
   }
 
   /* Product card */
   .prod-card {
     background: var(--color-bg-2);
-    border-radius: var(--radius);
+    border-radius: 2px;
     overflow: hidden;
-    border: 1px solid var(--color-border);
-    transition: transform var(--transition), box-shadow var(--transition);
+    border: none;
+    box-shadow: 0 2px 16px rgba(28,20,16,0.10);
+    transition: transform 0.38s cubic-bezier(0.22,1,0.36,1), box-shadow 0.38s cubic-bezier(0.22,1,0.36,1);
     display: flex;
     flex-direction: column;
   }
 
   .prod-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(28,20,16,0.18);
   }
 
+  /* Image area */
   .prod-card__media {
-    aspect-ratio: 1;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
     position: relative;
     background: var(--color-bg-3);
@@ -148,86 +152,153 @@
 
   .prod-card__media-link {
     display: block;
+    height: 100%;
   }
 
   .prod-card__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    display: block;
   }
 
   .prod-card:hover .prod-card__img {
-    transform: scale(1.05);
+    transform: scale(1.08);
+  }
+
+  /* Gradient overlay at bottom of image */
+  .prod-card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,20,16,0.45) 0%, transparent 50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.38s ease;
+  }
+
+  .prod-card:hover .prod-card__media::after {
+    opacity: 1;
+  }
+
+  /* Quick-view hover button on image */
+  .prod-card__hover-btn {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    opacity: 0;
+    transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.22,1,0.36,1);
+    white-space: nowrap;
+    z-index: 2;
+    background: rgba(245,238,228,0.95);
+    color: var(--color-foreground);
+    border: none;
+    padding: 9px 22px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    pointer-events: none;
+  }
+
+  .prod-card:hover .prod-card__hover-btn {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
   }
 
   .prod-card__no-img {
     width: 100%;
     height: 100%;
-    min-height: 200px;
+    min-height: 240px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-muted);
   }
 
+  /* Badge */
   .prod-card__badge {
     position: absolute;
-    top: 10px; left: 10px;
-    padding: 3px 10px;
-    border-radius: var(--radius-pill);
-    font-size: 0.65rem;
+    top: 14px;
+    left: 0;
+    padding: 4px 12px 4px 10px;
+    font-size: 0.6rem;
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     z-index: 1;
+    border-radius: 0 2px 2px 0;
   }
 
   .prod-card__badge--new { background: var(--color-accent); color: #fff; }
   .prod-card__badge--pop { background: var(--color-gold); color: var(--color-background); }
 
+  /* Card body */
   .prod-card__body {
-    padding: 16px;
+    padding: 20px 20px 22px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0;
     flex: 1;
+    border-top: 1px solid var(--color-border);
   }
 
   .prod-card__vendor {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-gold);
+    margin-bottom: 7px;
   }
 
   .prod-card__title {
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 1.15rem;
     font-style: italic;
     font-weight: 400;
     color: var(--color-foreground);
-    line-height: 1.3;
+    line-height: 1.35;
     flex: 1;
+    margin-bottom: 12px;
   }
 
   .prod-card__title a {
     text-decoration: none;
     color: inherit;
+    transition: color 0.2s;
+  }
+
+  .prod-card__title a:hover {
+    color: var(--color-gold);
+  }
+
+  /* Gold divider */
+  .prod-card__divider {
+    width: 28px;
+    height: 1px;
+    background: var(--color-gold);
+    margin-bottom: 12px;
+    opacity: 0.6;
   }
 
   .prod-card__price-row {
     display: flex;
     align-items: baseline;
     gap: 8px;
-    margin-top: 4px;
+    margin-bottom: 16px;
   }
 
   .prod-card__price {
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 600;
-    color: var(--color-gold);
+    color: var(--color-foreground);
+    letter-spacing: 0.02em;
   }
 
   .prod-card__price-compare {
@@ -236,12 +307,28 @@
     text-decoration: line-through;
   }
 
+  /* Button — outlined elegant style */
   .prod-card__btn {
-    margin-top: 10px;
+    display: block;
     width: 100%;
-    justify-content: center;
-    padding: 10px 16px;
-    font-size: 0.82rem;
+    text-align: center;
+    padding: 11px 16px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-foreground);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 1px;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .prod-card__btn:hover {
+    background: var(--color-foreground);
+    border-color: var(--color-foreground);
+    color: var(--color-background);
   }
 
   /* Placeholder */
@@ -249,16 +336,16 @@
   .prod-card__ph-line {
     height: 12px;
     background: var(--color-bg-3);
-    border-radius: 4px;
+    border-radius: 2px;
     animation: shimmer 1.5s infinite;
   }
   .prod-card__ph-line--sm { width: 40%; height: 8px; }
   .prod-card__ph-line--price { width: 30%; }
   .prod-card__ph-btn {
-    height: 36px;
+    height: 38px;
     background: var(--color-bg-3);
-    border-radius: var(--radius-pill);
-    margin-top: 6px;
+    border-radius: 1px;
+    margin-top: 10px;
     animation: shimmer 1.5s infinite 0.3s;
   }
 
@@ -268,13 +355,15 @@
   }
 
   @media (max-width: 900px) {
-    .fp-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .fp-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   }
 
   @media (max-width: 480px) {
-    .fp-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .fp-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .fp-header { flex-direction: column; align-items: flex-start; }
-    .prod-card__btn { font-size: 0.75rem; padding: 9px 12px; }
+    .prod-card__body { padding: 14px 14px 16px; }
+    .prod-card__title { font-size: 1rem; }
+    .prod-card__btn { font-size: 0.65rem; padding: 10px 12px; }
   }
 {% endstylesheet %}
 
