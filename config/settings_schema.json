@@ -31,9 +31,9 @@
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Accentkleur (rood)",
+        "label": "Accentkleur",
         "default": "#900020",
-        "info": "Gebruikt voor knoppen, badges en links"
+        "info": "Gebruikt voor knoppen, badges en links. Wisselt automatisch per seizoensschema."
       },
       {
         "type": "color",
@@ -163,12 +163,11 @@
           { "value": "none",       "label": "— Eigen kleuren (zie Kleuren)" },
           { "value": "standaard",  "label": "Hof van Laren — Standaard" },
           { "value": "valentijn",  "label": "Valentijnsdag" },
-          { "value": "pasen",      "label": "Pasen & Lente" },
+          { "value": "lente",      "label": "Lente" },
           { "value": "moederdag",  "label": "Moederdag" },
           { "value": "zomer",      "label": "Zomer" },
           { "value": "herfst",     "label": "Herfst" },
-          { "value": "kerst",      "label": "Kerst" },
-          { "value": "rouw",       "label": "Rouw & Aandacht" }
+          { "value": "kerst",      "label": "Kerst" }
         ],
         "default": "standaard"
       },
